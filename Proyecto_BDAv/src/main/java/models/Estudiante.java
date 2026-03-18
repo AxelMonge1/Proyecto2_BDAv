@@ -5,6 +5,9 @@
 package models;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.CollectionTable;
+import jakarta.persistence.Column;
+import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -20,6 +23,7 @@ import java.util.Set;
 /**
  *
  * @author axelm
+ * @author EdgarUris
  */
 @Entity
 public class Estudiante implements Serializable {
@@ -48,6 +52,12 @@ public class Estudiante implements Serializable {
     
     @OneToMany(mappedBy = "estudiante2", cascade = CascadeType.ALL)
     private Set<Match> matchesRecibidos = new HashSet<>();
+    
+    @OneToMany(mappedBy = "estudianteOrigen", cascade = CascadeType.ALL)
+    private Set<Interaccion> interaccionesHechas = new HashSet<>();
+    
+    @OneToMany(mappedBy = "estudianteDestino", cascade = CascadeType.ALL)
+    private Set<Interaccion> interaccionesRecibidas = new HashSet<>();
 
     public Estudiante() {
     }

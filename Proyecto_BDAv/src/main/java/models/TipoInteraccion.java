@@ -6,8 +6,8 @@ package models;
 
 /**
  *
- * @author axelm
+ * @author EdgarUris
  */
-public enum TipoAficion {
-    HOBBY,INTERES, ACADEMICO
+public enum TipoInteraccion {
+    LIKE, DISLIKE
 }
