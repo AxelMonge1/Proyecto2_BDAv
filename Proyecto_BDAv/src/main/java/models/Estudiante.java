@@ -59,7 +59,7 @@ public class Estudiante implements Serializable {
     public Estudiante() {
     }
 
-    public Estudiante(Long id, String nombre, String carrera, String descripcion, String correo, String contrasena, Set<Aficion> aficiones, Set<Match> matchesIniciados, Set<Match> matchesRecibidos) {
+    public Estudiante(Long id, String nombre, String carrera, String descripcion, String correo, String contrasena, Set<Aficion> aficiones) {
         this.id = id;
         this.nombre = nombre;
         this.carrera = carrera;
@@ -67,8 +67,14 @@ public class Estudiante implements Serializable {
         this.correo = correo;
         this.contrasena = contrasena;
         this.aficiones = aficiones;
-        this.matchesIniciados = matchesIniciados;
-        this.matchesRecibidos = matchesRecibidos;
+    }
+
+    public void setInteraccionesHechas(Set<Interaccion> interaccionesHechas) {
+        this.interaccionesHechas = interaccionesHechas;
+    }
+
+    public void setInteraccionesRecibidas(Set<Interaccion> interaccionesRecibidas) {
+        this.interaccionesRecibidas = interaccionesRecibidas;
     }
 
     public void setNombre(String nombre) {
@@ -101,6 +107,14 @@ public class Estudiante implements Serializable {
 
     public void setMatchesRecibidos(Set<Match> matchesRecibidos) {
         this.matchesRecibidos = matchesRecibidos;
+    }
+
+    public Set<Interaccion> getInteraccionesHechas() {
+        return interaccionesHechas;
+    }
+
+    public Set<Interaccion> getInteraccionesRecibidas() {
+        return interaccionesRecibidas;
     }
 
     public static long getSerialVersionUID() {
