@@ -5,9 +5,6 @@
 package models;
 
 import jakarta.persistence.CascadeType;
-import jakarta.persistence.CollectionTable;
-import jakarta.persistence.Column;
-import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -70,8 +67,14 @@ public class Estudiante implements Serializable {
         this.correo = correo;
         this.contrasena = contrasena;
         this.aficiones = aficiones;
-        this.matchesIniciados = matchesIniciados;
-        this.matchesRecibidos = matchesRecibidos;
+    }
+
+    public void setInteraccionesHechas(Set<Interaccion> interaccionesHechas) {
+        this.interaccionesHechas = interaccionesHechas;
+    }
+
+    public void setInteraccionesRecibidas(Set<Interaccion> interaccionesRecibidas) {
+        this.interaccionesRecibidas = interaccionesRecibidas;
     }
 
     public void setNombre(String nombre) {
@@ -104,6 +107,14 @@ public class Estudiante implements Serializable {
 
     public void setMatchesRecibidos(Set<Match> matchesRecibidos) {
         this.matchesRecibidos = matchesRecibidos;
+    }
+
+    public Set<Interaccion> getInteraccionesHechas() {
+        return interaccionesHechas;
+    }
+
+    public Set<Interaccion> getInteraccionesRecibidas() {
+        return interaccionesRecibidas;
     }
 
     public static long getSerialVersionUID() {
