@@ -59,7 +59,7 @@ public class Estudiante implements Serializable {
     public Estudiante() {
     }
 
-    public Estudiante(Long id, String nombre, String carrera, String descripcion, String correo, String contrasena, Set<Aficion> aficiones) {
+    public Estudiante(Long id, String nombre, String carrera, String descripcion, String correo, String contrasena, Set<Aficion> aficiones, Set<Match> matchesIniciados, Set<Match> matchesRecibidos) {
         this.id = id;
         this.nombre = nombre;
         this.carrera = carrera;
