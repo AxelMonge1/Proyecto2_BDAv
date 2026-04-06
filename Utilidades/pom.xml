@@ -2,24 +2,21 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.itson</groupId>
-    <artifactId>Persistencia</artifactId>
-    <version>1.0</version>
+    <artifactId>Utilidades</artifactId>
+    <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
     <dependencies>
+                <!-- JPA API (Jakarta) -->
         <dependency>
-            <groupId>org.itson</groupId>
-            <artifactId>Proyecto_BDAv</artifactId>
-            <version>1.0</version>
+            <groupId>jakarta.persistence</groupId>
+            <artifactId>jakarta.persistence-api</artifactId>
+            <version>3.2.0</version>
         </dependency>
-        <dependency>
-            <groupId>org.itson</groupId>
-            <artifactId>Utilidades</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
+
     </dependencies>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.release>25</maven.compiler.release>
-        <exec.mainClass>org.itson.persistencia.Persistencia</exec.mainClass>
+        <exec.mainClass>com.mycompany.utilidades.Utilidades</exec.mainClass>
     </properties>
 </project>

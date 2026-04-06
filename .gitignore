@@ -24,3 +24,5 @@ hs_err_pid*
 replay_pid*
 /Persistencia/target/
 /Proyecto_BDAv/target/
+/Utilities/target/
+/Utilidades/target/

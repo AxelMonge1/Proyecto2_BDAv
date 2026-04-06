@@ -2,13 +2,13 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  */
 
-package org.itson.proyecto_bdav;
+package org.itson.presentacion;
 
 /**
  *
- * @author axelm
+ * @author EdgarUris
  */
-public class Proyecto_BDAv {
+public class Presentacion {
 
     public static void main(String[] args) {
         System.out.println("Hello World!");
