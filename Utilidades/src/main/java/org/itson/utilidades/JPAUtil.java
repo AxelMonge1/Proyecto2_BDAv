@@ -14,7 +14,7 @@ import jakarta.persistence.Persistence;
  */
 public class JPAUtil {
 
-    private static final String PERSISTENCE_UNIT = "DogosObregonPU";
+    private static final String PERSISTENCE_UNIT = "TinderPU";
     private static EntityManagerFactory emf;
 
     private JPAUtil() {

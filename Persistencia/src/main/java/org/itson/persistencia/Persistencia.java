@@ -10,7 +10,7 @@ import models.Estudiante;
 import models.Interaccion;
 import models.Match;
 import models.TipoInteraccion;
-import org.itson.utilities.JPAUtil;
+import org.itson.utilidades.JPAUtil;
 
 /**
  *
