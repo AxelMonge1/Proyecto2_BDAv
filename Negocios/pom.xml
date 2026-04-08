@@ -5,6 +5,18 @@
     <artifactId>Negocios</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
+    <dependencies>
+        <dependency>
+            <groupId>org.itson</groupId>
+            <artifactId>Persistencia</artifactId>
+            <version>1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.itson</groupId>
+            <artifactId>Utilidades</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.release>25</maven.compiler.release>
