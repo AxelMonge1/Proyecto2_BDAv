@@ -6,7 +6,7 @@ package org.itson.presentacion;
 
 /**
  *
- * @author HP
+ * @author EdgarUris
  */
 public class pnlPerfilEstudiante extends javax.swing.JPanel {
 

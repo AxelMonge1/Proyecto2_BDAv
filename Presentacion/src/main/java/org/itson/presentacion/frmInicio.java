@@ -4,24 +4,26 @@
  */
 package org.itson.presentacion;
 
-import models.Estudiante;
-
 /**
  *
- * @author EdgarUris
+ * @author HP
  */
-//aqui se da todo solo cambiamos los paneles
-public class frmPrincipal extends javax.swing.JFrame {
+public class frmInicio extends javax.swing.JFrame {
     
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(frmPrincipal.class.getName());
-    private static Estudiante e;
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(frmInicio.class.getName());
 
     /**
-     * Creates new form frmInicioSesion
+     * Creates new form frmInicio
      */
-    public frmPrincipal(Estudiante e) {
-        this.e = e;
+    public frmInicio() {
         initComponents();
+        pnlInicioSesion i = new pnlInicioSesion();
+        i.setSize(elPanel.getWidth(), elPanel.getWidth());
+        elPanel.removeAll();
+        elPanel.add(i);
+        elPanel.revalidate();
+        elPanel.repaint();
+        setTitle("Inicio de sesión");
     }
 
     /**
@@ -33,34 +35,22 @@ public class frmPrincipal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
+        elPanel = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout elPanelLayout = new javax.swing.GroupLayout(elPanel);
+        elPanel.setLayout(elPanelLayout);
+        elPanelLayout.setHorizontalGroup(
+            elPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 600, Short.MAX_VALUE)
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        elPanelLayout.setVerticalGroup(
+            elPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 400, Short.MAX_VALUE)
         );
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(71, Short.MAX_VALUE)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
+        getContentPane().add(elPanel, java.awt.BorderLayout.CENTER);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -87,10 +77,10 @@ public class frmPrincipal extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new frmPrincipal(e).setVisible(true));
+        java.awt.EventQueue.invokeLater(() -> new frmInicio().setVisible(true));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel elPanel;
     // End of variables declaration//GEN-END:variables
 }

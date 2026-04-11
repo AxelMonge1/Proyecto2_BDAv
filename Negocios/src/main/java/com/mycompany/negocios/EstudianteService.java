@@ -10,6 +10,7 @@ import models.Estudiante;
 import org.itson.persistencia.EstudianteDAO;
 import org.itson.persistencia.IEstudianteDAO;
 import org.itson.utilidades.JPAUtil;
+import org.itson.utilidades.RegexUtil;
 
 /**
  *
@@ -18,18 +19,24 @@ import org.itson.utilidades.JPAUtil;
 public class EstudianteService implements IEstudianteService{
     
     private IEstudianteDAO estudianteDAO;
+    private RegexUtil regex;
 
     public EstudianteService() {
         this.estudianteDAO = new EstudianteDAO();
+        this.regex = new RegexUtil();
     }
     
-    private void validar(Estudiante estudiante){
+    public boolean validar(Estudiante estudiante){
         if (estudiante == null) {
             throw new IllegalArgumentException("El estudiante no puede ser nulo.");
         }
         if (estudiante.getNombre() == null || estudiante.getNombre().trim().isEmpty()) {
             throw new IllegalArgumentException("El nombre del estudiante es obligatorio.");
         }
+        if(!regex.validaCorreoEstudiante(estudiante.getCorreo())){
+            throw new IllegalArgumentException("El correo del estudiante debe ser el institucional");
+        }
+        return true;
     }
 
     @Override

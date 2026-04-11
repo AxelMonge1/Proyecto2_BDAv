@@ -4,16 +4,22 @@
  */
 package org.itson.presentacion;
 
+import javax.swing.JOptionPane;
+import models.Estudiante;
+import org.itson.utilidades.RegexUtil;
+
 /**
  *
  * @author EdgarUris
  */
 public class pnlRegistro extends javax.swing.JPanel {
 
+    private RegexUtil regex;
     /**
      * Creates new form pnlRegistro
      */
     public pnlRegistro() {
+        this.regex = new RegexUtil();
         initComponents();
     }
 
@@ -34,13 +40,9 @@ public class pnlRegistro extends javax.swing.JPanel {
         lblCorreo = new javax.swing.JLabel();
         txtNombre = new javax.swing.JTextField();
         lblApellido = new javax.swing.JLabel();
-        ckbVerPass = new javax.swing.JCheckBox();
         pswContraConf = new javax.swing.JPasswordField();
         lblContraConf = new javax.swing.JLabel();
-        ckbVerPassConf = new javax.swing.JCheckBox();
-        txtCarrera = new javax.swing.JPasswordField();
         lblCarrera = new javax.swing.JLabel();
-        txtSemestre = new javax.swing.JPasswordField();
         lblSemestre = new javax.swing.JLabel();
         lblIntereses = new javax.swing.JLabel();
         lblHobbies = new javax.swing.JLabel();
@@ -50,6 +52,13 @@ public class pnlRegistro extends javax.swing.JPanel {
         txtHobbies = new javax.swing.JTextArea();
         lblRegistro = new javax.swing.JLabel();
         btnRegistrar = new javax.swing.JButton();
+        cbxCarreras = new javax.swing.JComboBox<>();
+        btnVerContra = new javax.swing.JToggleButton();
+        btnVerContra2 = new javax.swing.JToggleButton();
+        txtSemestre = new javax.swing.JTextField();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        txtDescripcion = new javax.swing.JTextArea();
+        lblDesc = new javax.swing.JLabel();
 
         txtApellido.setColumns(15);
 
@@ -68,29 +77,14 @@ public class pnlRegistro extends javax.swing.JPanel {
 
         lblApellido.setText("Apellido:");
 
-        ckbVerPass.setFont(new java.awt.Font("Segoe UI", 0, 8)); // NOI18N
-        ckbVerPass.setText("Ver");
-        ckbVerPass.addActionListener(this::ckbVerPassActionPerformed);
-
         pswContraConf.setColumns(15);
         pswContraConf.addActionListener(this::pswContraConfActionPerformed);
 
         lblContraConf.setText("Confirmar contraseña:");
 
-        ckbVerPassConf.setFont(new java.awt.Font("Segoe UI", 0, 8)); // NOI18N
-        ckbVerPassConf.setText("Ver");
-        ckbVerPassConf.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        ckbVerPassConf.addActionListener(this::ckbVerPassConfActionPerformed);
-
-        txtCarrera.setColumns(15);
-        txtCarrera.addActionListener(this::txtCarreraActionPerformed);
-
         lblCarrera.setText("Carrera:");
 
-        txtSemestre.setColumns(15);
-        txtSemestre.addActionListener(this::txtSemestreActionPerformed);
-
-        lblSemestre.setText("Semetre:");
+        lblSemestre.setText("Semestre:");
 
         lblIntereses.setText("Intereses (separados por comas):");
 
@@ -102,12 +96,29 @@ public class pnlRegistro extends javax.swing.JPanel {
 
         txtHobbies.setColumns(20);
         txtHobbies.setRows(5);
+        txtHobbies.setToolTipText("Gusto 1, Gusto 2, Gusto 3... Minimo 2");
         jScrollPane2.setViewportView(txtHobbies);
 
-        lblRegistro.setText("Registro");
+        lblRegistro.setText("Registro de cuenta");
 
         btnRegistrar.setText("Crear cuenta");
         btnRegistrar.addActionListener(this::btnRegistrarActionPerformed);
+
+        cbxCarreras.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Elige", "Licenciatura en Administración", "Licenciatura en Administración de Empresas Turísticas", "Licenciatura en Arquitectura", "Licenciatura en Ciencias de la Educación", "Licenciatura en Ciencias del Ejercicio Físico", "Licenciatura en Contaduría Pública", "Licenciatura en Diseño Gráfico", "Licenciatura en Derecho", "Licenciatura en Economía y Finanzas", "Licenciatura en Educación Artística y Gestión Cultural", "Licenciatura en Educación Infantil", "Licenciatura en Enfermería", "Licenciatura en Psicología", "Licenciatura en Tecnología de Alimentos", "Ingeniería en Biosistemas", "Ingeniería en Biotecnología", "Ingeniería en Ciencias Ambientales", "Ingeniería Civil", "Ingeniería Electromecánica", "ngeniería en Electrónica", "Ingeniería Industrial y de Sistemas", "Ingeniería en Logística", "Ingeniería en Manufactura", "Ingeniería en Mecatrónica", "Ingeniería Química", "Ingeniería en Software ", "Medicina Veterinaria y Zootecnia", "Profesional Asociado en Desarrollo Infantil" }));
+
+        btnVerContra.setText("o_o");
+        btnVerContra.addActionListener(this::btnVerContraActionPerformed);
+
+        btnVerContra2.setText("o_o");
+        btnVerContra2.addActionListener(this::btnVerContra2ActionPerformed);
+
+        txtSemestre.setColumns(5);
+
+        txtDescripcion.setColumns(20);
+        txtDescripcion.setRows(5);
+        jScrollPane3.setViewportView(txtDescripcion);
+
+        lblDesc.setText("Descripción breve:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -118,6 +129,40 @@ public class pnlRegistro extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblCarrera, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cbxCarreras, javax.swing.GroupLayout.PREFERRED_SIZE, 302, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(pswContra, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(4, 4, 4)
+                                        .addComponent(btnVerContra))
+                                    .addComponent(lblContra, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(pswContraConf, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(btnVerContra2))
+                                    .addComponent(lblContraConf))
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lblSemestre, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtSemestre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lblIntereses)
+                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(16, 16, 16)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(lblHobbies)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(lblDesc))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE))))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -129,37 +174,14 @@ public class pnlRegistro extends javax.swing.JPanel {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(lblCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(lblContra, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(pswContra, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(ckbVerPass))
-                                    .addComponent(txtCarrera, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(lblCarrera, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(lblIntereses)
-                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(lblSemestre, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtSemestre, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                        .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                                        .addComponent(lblHobbies, javax.swing.GroupLayout.Alignment.LEADING))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(pswContraConf, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(ckbVerPassConf))
-                                    .addComponent(lblContraConf)))))
+                                    .addComponent(txtCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(272, 272, 272)
                         .addComponent(lblRegistro))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(252, 252, 252)
                         .addComponent(btnRegistrar)))
-                .addContainerGap(33, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -180,36 +202,37 @@ public class pnlRegistro extends javax.swing.JPanel {
                         .addComponent(lblCorreo)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGap(20, 20, 20)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(lblContra)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblContra)
+                            .addComponent(lblContraConf)
+                            .addComponent(lblSemestre))
                         .addGap(4, 4, 4)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(pswContra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(ckbVerPass)))
+                            .addComponent(btnVerContra)
+                            .addComponent(pswContraConf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(lblContraConf)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(20, 20, 20)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(pswContraConf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(ckbVerPassConf))))
+                            .addComponent(btnVerContra2)
+                            .addComponent(txtSemestre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblCarrera)
-                    .addComponent(lblSemestre))
+                .addComponent(lblCarrera)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtCarrera, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtSemestre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(cbxCarreras, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblIntereses)
-                    .addComponent(lblHobbies))
+                    .addComponent(lblHobbies)
+                    .addComponent(lblDesc))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
                 .addComponent(btnRegistrar)
                 .addGap(20, 20, 20))
@@ -217,59 +240,112 @@ public class pnlRegistro extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void pswContraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pswContraActionPerformed
-        // TODO add your handling code here:
+        //delete
     }//GEN-LAST:event_pswContraActionPerformed
 
-    private void ckbVerPassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ckbVerPassActionPerformed
-        if(ckbVerPass.isSelected()){
+    private void pswContraConfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pswContraConfActionPerformed
+
+    }//GEN-LAST:event_pswContraConfActionPerformed
+
+    private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
+        String nombre = txtNombre.getText().trim();
+        String apellido = txtApellido.getText().trim();
+        
+        
+        String correo = txtCorreo.getText();
+        if(!regex.validaCorreoEstudiante(correo)){
+            JOptionPane.showMessageDialog(this, "Usa tu correo institucional (nombre.apellidoID@potros.itson.edu.mx)", "Correo erroneo", JOptionPane.ERROR_MESSAGE);
+        }
+        
+        String contra = pswContra.getText();
+        String contraConf = pswContraConf.getText();
+        
+        if(!contra.equals(contraConf)){
+            JOptionPane.showMessageDialog(this, "Las contraseñas no coinciden","contraseñas diferentes",JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        try{
+            int semestre = Integer.parseInt(txtSemestre.getText());
+            if(semestre > 23){
+                JOptionPane.showMessageDialog(this, "El semestre no puede ser 24 o mayor", "Semestre muy alto", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            if(semestre < 1){
+                JOptionPane.showMessageDialog(this, "El semestre no puede ser menor a 1", "Semestre muy bajo", JOptionPane.ERROR_MESSAGE);
+            }
+        }catch(NumberFormatException ex){
+            JOptionPane.showMessageDialog(this, "El semestre se guarda en numero", "Semestre erroneo", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        if(cbxCarreras.getSelectedItem() == "Elige"){
+            JOptionPane.showMessageDialog(this, "Elige una carrera de las opciones", "Carrera no elegida", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        if(!regex.validaInteresesHobbies(txtIntereses.getText())){
+            JOptionPane.showMessageDialog(this, "Formato incorrecto, anota tus intereses separados por comas, mínimo 2, máximo 10", "Formato de intereses incorrecto", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        if(regex.validaInteresesHobbies(txtHobbies.getText())){
+            JOptionPane.showMessageDialog(this, "Formato incorrecto, anota tus hobbies separados por comas, mínimo 2, máximo 10", "Formato de hobbies incorrecto", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        String nombCompleto = nombre + " " + apellido;
+        String carrera = cbxCarreras.getSelectedItem().toString();
+        String descripcion = txtDescripcion.getText();
+        
+        String[] aficionesHobbies = txtHobbies.getText().split(",");
+        String[] aficionesIntereses = txtIntereses.getText().split(",");
+        
+        
+        Estudiante nuevoEstudiante = new Estudiante();
+        nuevoEstudiante.setCarrera(carrera);
+        nuevoEstudiante.setNombre(nombCompleto);
+        nuevoEstudiante.setDescripcion(descripcion);
+        nuevoEstudiante.setCorreo(correo);
+
+    }//GEN-LAST:event_btnRegistrarActionPerformed
+
+    private void btnVerContraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerContraActionPerformed
+        if(btnVerContra.isSelected()){
             pswContra.setEchoChar((char)0);
-            ckbVerPass.setText("No ver");
+            btnVerContra.setText("-_-");
         }
         else{
             pswContra.setEchoChar('*');
-            ckbVerPass.setText("Ver");
+            btnVerContra.setText("o_o");
         }
-    }//GEN-LAST:event_ckbVerPassActionPerformed
+    }//GEN-LAST:event_btnVerContraActionPerformed
 
-    private void pswContraConfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pswContraConfActionPerformed
-        if(ckbVerPassConf.isSelected()){
+    private void btnVerContra2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerContra2ActionPerformed
+        if(btnVerContra2.isSelected()){
             pswContraConf.setEchoChar((char)0);
-            ckbVerPassConf.setText("No ver");
+            btnVerContra2.setText("-_-");
         }
         else{
             pswContraConf.setEchoChar('*');
-            ckbVerPassConf.setText("Ver");
+            btnVerContra2.setText("o_o");
         }
-    }//GEN-LAST:event_pswContraConfActionPerformed
-
-    private void ckbVerPassConfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ckbVerPassConfActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_ckbVerPassConfActionPerformed
-
-    private void txtCarreraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCarreraActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtCarreraActionPerformed
-
-    private void txtSemestreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSemestreActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtSemestreActionPerformed
-
-    private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnRegistrarActionPerformed
+    }//GEN-LAST:event_btnVerContra2ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnRegistrar;
-    private javax.swing.JCheckBox ckbVerPass;
-    private javax.swing.JCheckBox ckbVerPassConf;
+    private javax.swing.JToggleButton btnVerContra;
+    private javax.swing.JToggleButton btnVerContra2;
+    private javax.swing.JComboBox<String> cbxCarreras;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JLabel lblApellido;
     private javax.swing.JLabel lblCarrera;
     private javax.swing.JLabel lblContra;
     private javax.swing.JLabel lblContraConf;
     private javax.swing.JLabel lblCorreo;
+    private javax.swing.JLabel lblDesc;
     private javax.swing.JLabel lblHobbies;
     private javax.swing.JLabel lblIntereses;
     private javax.swing.JLabel lblNombre;
@@ -278,11 +354,11 @@ public class pnlRegistro extends javax.swing.JPanel {
     private javax.swing.JPasswordField pswContra;
     private javax.swing.JPasswordField pswContraConf;
     private javax.swing.JTextField txtApellido;
-    private javax.swing.JPasswordField txtCarrera;
     private javax.swing.JTextField txtCorreo;
+    private javax.swing.JTextArea txtDescripcion;
     private javax.swing.JTextArea txtHobbies;
     private javax.swing.JTextArea txtIntereses;
     private javax.swing.JTextField txtNombre;
-    private javax.swing.JPasswordField txtSemestre;
+    private javax.swing.JTextField txtSemestre;
     // End of variables declaration//GEN-END:variables
 }

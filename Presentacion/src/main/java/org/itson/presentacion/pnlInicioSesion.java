@@ -4,17 +4,30 @@
  */
 package org.itson.presentacion;
 
+import com.mycompany.negocios.EstudianteService;
+import javax.swing.JOptionPane;
+import models.Estudiante;
+import org.itson.persistencia.EstudianteDAO;
+import org.itson.persistencia.IEstudianteDAO;
+import org.itson.utilidades.JPAUtil;
+
+
 /**
  *
  * @author EdgarUris
  */
 public class pnlInicioSesion extends javax.swing.JPanel {
 
+    private IEstudianteDAO estDAO;
+    private EstudianteService estService;
+    
     /**
      * Creates new form pnlInicioSesion
      */
     public pnlInicioSesion() {
         initComponents();
+        this.estDAO = new EstudianteDAO();
+        this.estService = new EstudianteService();
     }
 
     /**
@@ -27,20 +40,22 @@ public class pnlInicioSesion extends javax.swing.JPanel {
     private void initComponents() {
 
         lblBienvenido = new javax.swing.JLabel();
-        txtUsername = new javax.swing.JTextField();
+        txtCorreo = new javax.swing.JTextField();
         pswContra = new javax.swing.JPasswordField();
         lblUser = new javax.swing.JLabel();
         lblContra = new javax.swing.JLabel();
         btnCrearCuenta = new javax.swing.JButton();
         lblNoCuenta = new javax.swing.JLabel();
+        btnIniciarSesion = new javax.swing.JButton();
+        btnVerPass = new javax.swing.JToggleButton();
 
         lblBienvenido.setText("Inicio de sesion");
 
-        txtUsername.setColumns(15);
+        txtCorreo.setColumns(15);
 
         pswContra.setColumns(15);
 
-        lblUser.setText("Nombre de usuario:");
+        lblUser.setText("Correo institucional:");
 
         lblContra.setText("Contraseña:");
 
@@ -49,25 +64,39 @@ public class pnlInicioSesion extends javax.swing.JPanel {
 
         lblNoCuenta.setText("¿No tienes una cuenta todavia?");
 
+        btnIniciarSesion.setText("Iniciar sesión");
+        btnIniciarSesion.addActionListener(this::btnIniciarSesionActionPerformed);
+
+        btnVerPass.setText("o_o");
+        btnVerPass.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        btnVerPass.addActionListener(this::btnVerPassActionPerformed);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(217, 217, 217)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(lblContra, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblUser, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblNoCuenta, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(49, 49, 49)
+                        .addGap(217, 217, 217)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(lblContra, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblUser, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblNoCuenta, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(43, 43, 43)
+                                .addComponent(lblBienvenido))
+                            .addComponent(txtCorreo)
+                            .addComponent(pswContra))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnVerPass))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(264, 264, 264)
                         .addComponent(btnCrearCuenta))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(43, 43, 43)
-                        .addComponent(lblBienvenido))
-                    .addComponent(pswContra, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtUsername, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(217, Short.MAX_VALUE))
+                        .addGap(245, 245, 245)
+                        .addComponent(btnIniciarSesion)))
+                .addContainerGap(188, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -77,27 +106,70 @@ public class pnlInicioSesion extends javax.swing.JPanel {
                 .addGap(34, 34, 34)
                 .addComponent(lblUser)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtUsername, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(lblContra)
                 .addGap(4, 4, 4)
-                .addComponent(pswContra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(102, 102, 102)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(pswContra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnVerPass))
+                .addGap(18, 18, 18)
+                .addComponent(btnIniciarSesion)
+                .addGap(61, 61, 61)
                 .addComponent(lblNoCuenta)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnCrearCuenta)
-                .addContainerGap(76, Short.MAX_VALUE))
+                .addContainerGap(82, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnIniciarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIniciarSesionActionPerformed
+        String correo = txtCorreo.getText().trim();
+        String contra = pswContra.getText();
+        
+        if(correo.trim().isEmpty() || contra.trim().isEmpty()){
+            JOptionPane.showMessageDialog(this, "Todos los campos son necesarios", "Campos faltantes", JOptionPane.ERROR_MESSAGE);
+        }
+
+        Estudiante e = estDAO.buscarPorCorreo(correo, JPAUtil.getEntityManager());
+        
+        if(e == null){
+            JOptionPane.showMessageDialog(this, "No se encontró la cuenta con el correo proporcionado", 
+                    "Cuenta no encontrada", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        if(e.getContrasena() != contra){
+            JOptionPane.showMessageDialog(this, "Contraseña incorrecta, intenta de nuevo", 
+                    "Contraseña incorrecta", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+        
+        frmPrincipal ventana = new frmPrincipal(e);
+        ventana.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_btnIniciarSesionActionPerformed
+
+    private void btnVerPassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerPassActionPerformed
+        if(btnVerPass.isSelected()){
+            pswContra.setEchoChar((char)0);
+            btnVerPass.setText("-_-");
+        }
+        else{
+            pswContra.setEchoChar('*');
+            btnVerPass.setText("o_o");
+        }
+    }//GEN-LAST:event_btnVerPassActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCrearCuenta;
+    private javax.swing.JButton btnIniciarSesion;
+    private javax.swing.JToggleButton btnVerPass;
     private javax.swing.JLabel lblBienvenido;
     private javax.swing.JLabel lblContra;
     private javax.swing.JLabel lblNoCuenta;
     private javax.swing.JLabel lblUser;
     private javax.swing.JPasswordField pswContra;
-    private javax.swing.JTextField txtUsername;
+    private javax.swing.JTextField txtCorreo;
     // End of variables declaration//GEN-END:variables
 }
