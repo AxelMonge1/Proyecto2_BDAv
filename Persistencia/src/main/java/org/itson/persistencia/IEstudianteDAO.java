@@ -36,4 +36,12 @@ public interface IEstudianteDAO extends IGenericoDAO<Estudiante, Long> {
      * @return Lista de estudiantes que le han dado like
      */
     List<Estudiante> likesRecibidos(Long idEstudiante, EntityManager em);
+    
+    /**
+     *
+     * @param idEstudiante
+     * @param em
+     * @return Foto del usuario en un array de bytes
+     */
+    byte[] getFotoDePerfil(Long idEstudiante, EntityManager em);
 }

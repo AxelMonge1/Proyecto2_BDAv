@@ -88,4 +88,13 @@ public class EstudianteDAO implements IEstudianteDAO {
         }
         return null;
     }
+
+    @Override
+    public byte[] getFotoDePerfil(Long idEstudiante, EntityManager em) {
+        Estudiante estudiante = em.find(Estudiante.class, idEstudiante);
+        if(estudiante != null){
+            return estudiante.getFoto();
+        }
+        return null;
+    }
 }
