@@ -5,6 +5,7 @@
 package org.itson.presentacion;
 
 import com.mycompany.negocios.EstudianteService;
+import java.io.IOException;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import models.Estudiante;
@@ -150,8 +151,12 @@ public class pnlInicioSesion extends javax.swing.JPanel {
             return;
         }
         
-        frmPrincipal ventana = new frmPrincipal(e);
-        ventana.setVisible(true);
+        frmVentanaPrincipal ventana = new frmVentanaPrincipal(e);
+        try {
+            ventana.ver();
+        } catch (IOException ex) {
+            System.getLogger(pnlInicioSesion.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        }
         this.setVisible(false);
     }//GEN-LAST:event_btnIniciarSesionActionPerformed
 
