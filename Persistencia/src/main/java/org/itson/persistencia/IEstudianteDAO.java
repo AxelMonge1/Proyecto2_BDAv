@@ -61,5 +61,5 @@ public interface IEstudianteDAO extends IGenericoDAO<Estudiante, Long> {
      * @param em
      * @return Busca a estudiantes con correo que coincidan con la busqueda
      */
-    Estudiante buscarPorCorreo(String correo, EntityManager em);
+    //Estudiante buscarPorCorreo(String correo, EntityManager em);
 }

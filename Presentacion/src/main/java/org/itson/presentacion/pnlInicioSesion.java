@@ -6,6 +6,7 @@ package org.itson.presentacion;
 
 import com.mycompany.negocios.EstudianteService;
 import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
 import models.Estudiante;
 import org.itson.persistencia.EstudianteDAO;
 import org.itson.persistencia.IEstudianteDAO;
@@ -61,6 +62,7 @@ public class pnlInicioSesion extends javax.swing.JPanel {
 
         btnCrearCuenta.setText("Crear cuenta");
         btnCrearCuenta.setBorder(null);
+        btnCrearCuenta.addActionListener(this::btnCrearCuentaActionPerformed);
 
         lblNoCuenta.setText("¿No tienes una cuenta todavia?");
 
@@ -125,9 +127,13 @@ public class pnlInicioSesion extends javax.swing.JPanel {
 
     private void btnIniciarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIniciarSesionActionPerformed
         String correo = txtCorreo.getText().trim();
-        String contra = pswContra.getText();
+        char[] contraChar = pswContra.getPassword();
+        String contra = "";        
+        for (char c : contraChar) {
+            contra += c;
+        }
         
-        if(correo.trim().isEmpty() || contra.trim().isEmpty()){
+        if(correo.trim().isEmpty() || contra.isEmpty()){
             JOptionPane.showMessageDialog(this, "Todos los campos son necesarios", "Campos faltantes", JOptionPane.ERROR_MESSAGE);
         }
 
@@ -160,6 +166,14 @@ public class pnlInicioSesion extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_btnVerPassActionPerformed
 
+    private void btnCrearCuentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearCuentaActionPerformed
+        frmInicio padre = (frmInicio) SwingUtilities.getWindowAncestor(this);
+        padre.pasarACrearCuenta();
+        frmCrearCuenta registro = new frmCrearCuenta();
+        registro.setVisible(true);
+    }//GEN-LAST:event_btnCrearCuentaActionPerformed
+
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCrearCuenta;

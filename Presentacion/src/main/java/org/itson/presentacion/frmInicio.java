@@ -25,6 +25,12 @@ public class frmInicio extends javax.swing.JFrame {
         elPanel.repaint();
         setTitle("Inicio de sesión");
     }
+    
+    protected void pasarACrearCuenta(){
+        frmCrearCuenta registro = new frmCrearCuenta();
+        registro.setVisible(true);
+        this.dispose();
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.

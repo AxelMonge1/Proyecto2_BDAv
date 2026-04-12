@@ -8,6 +8,7 @@ import jakarta.persistence.EntityManager;
 import java.util.List;
 import models.Aficion;
 import models.Estudiante;
+import models.TipoAficion;
 import org.itson.persistencia.AficionDAO;
 import org.itson.persistencia.IAficionDAO;
 import org.itson.utilidades.JPAUtil;
@@ -21,6 +22,26 @@ public class AficionService implements IAficionService{
 
     public AficionService() {
         this.aficionDAO = new AficionDAO();
+    }
+    
+    public void inicializarAficiones(){
+        EntityManager em = JPAUtil.getEntityManager();
+        if(aficionDAO.listar(em).isEmpty()){
+            String[] aficionesHobbies = {"Arte","Fotografia","Musica","Videojuegos","Baile","Coleccionismo","Jardineria","Lectura"};
+            for (String aficionesHobby : aficionesHobbies) {
+                Aficion nueva = new Aficion();
+                nueva.setNombre(aficionesHobby);
+                nueva.setTipoAficion(TipoAficion.HOBBY);
+                aficionDAO.agregar(nueva, em);
+            }
+            String[] aficionesIntereses = {"Deportes","Programacion","Robotica","Idiomas","CineYSeries","Moda","Turismo","Gastronomia"};
+            for (String aficionesInteres : aficionesIntereses) {
+                Aficion nueva = new Aficion();
+                nueva.setNombre(aficionesInteres);
+                nueva.setTipoAficion(TipoAficion.INTERES);
+                aficionDAO.agregar(nueva, em);
+            }
+        }
     }
 
     @Override

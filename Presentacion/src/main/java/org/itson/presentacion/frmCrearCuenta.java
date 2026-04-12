@@ -4,6 +4,7 @@
  */
 package org.itson.presentacion;
 import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
 import models.Estudiante;
 /**
  *
@@ -12,6 +13,7 @@ import models.Estudiante;
 public class frmCrearCuenta extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(frmCrearCuenta.class.getName());
+    private Estudiante estudianteRegistro = new Estudiante();
     
     /**
      * Creates new form frmCrearCuenta
@@ -37,8 +39,6 @@ public class frmCrearCuenta extends javax.swing.JFrame {
     private void initComponents() {
 
         elPanel = new javax.swing.JPanel();
-        lblRegistro = new javax.swing.JLabel();
-        btnSiguiente = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -46,51 +46,44 @@ public class frmCrearCuenta extends javax.swing.JFrame {
         elPanel.setLayout(elPanelLayout);
         elPanelLayout.setHorizontalGroup(
             elPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 600, Short.MAX_VALUE)
         );
         elPanelLayout.setVerticalGroup(
             elPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 400, Short.MAX_VALUE)
         );
 
-        lblRegistro.setText("Registro");
-
-        btnSiguiente.setText("Siguiente ->");
-        btnSiguiente.addActionListener(this::btnSiguienteActionPerformed);
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(elPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(lblRegistro)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(498, Short.MAX_VALUE)
-                .addComponent(btnSiguiente)
-                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(lblRegistro)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(elPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnSiguiente)
-                .addContainerGap(8, Short.MAX_VALUE))
+                .addGap(0, 65, Short.MAX_VALUE)
+                .addComponent(elPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnSiguienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSiguienteActionPerformed
-
-    }//GEN-LAST:event_btnSiguienteActionPerformed
-
+    protected void pasarAIntereses(Estudiante est){
+        this.estudianteRegistro = est;
+        pnlIntereses p2 = new pnlIntereses(estudianteRegistro);
+        p2.setSize(elPanel.getWidth(), elPanel.getWidth());
+        elPanel.removeAll();
+        elPanel.add(p2);
+        elPanel.revalidate();
+        elPanel.repaint();
+    }
+    
+    protected void volverAInicioSesion(){
+        frmInicio inicioSesion = new frmInicio();
+        inicioSesion.setVisible(true);
+        this.dispose();
+    }
     
     /**
      * @param args the command line arguments
@@ -118,8 +111,6 @@ public class frmCrearCuenta extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnSiguiente;
     private javax.swing.JPanel elPanel;
-    private javax.swing.JLabel lblRegistro;
     // End of variables declaration//GEN-END:variables
 }
