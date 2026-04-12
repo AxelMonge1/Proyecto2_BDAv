@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Form version="1.3" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JDialogFormInfo">
+  <Properties>
+    <Property name="defaultCloseOperation" type="int" value="2"/>
+  </Properties>
+  <SyntheticProperties>
+    <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
+    <SyntheticProperty name="generateCenter" type="boolean" value="false"/>
+  </SyntheticProperties>
+  <AuxValues>
+    <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
+    <AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_generateFQN" type="java.lang.Boolean" value="true"/>
+    <AuxValue name="FormSettings_generateMnemonicsCode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_i18nAutoMode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_layoutCodeTarget" type="java.lang.Integer" value="1"/>
+    <AuxValue name="FormSettings_listenerGenerationStyle" type="java.lang.Integer" value="3"/>
+    <AuxValue name="FormSettings_variablesLocal" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_variablesModifier" type="java.lang.Integer" value="2"/>
+  </AuxValues>
+
+  <Layout>
+    <DimensionLayout dim="0">
+      <Group type="103" groupAlignment="0" attributes="0">
+          <Group type="102" attributes="0">
+              <EmptySpace min="-2" pref="75" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="Arte" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="Coleccionismo" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="Videojuegos" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="Baile" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="Musica" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="Fotografia" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="Jardineria" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="Lectura" alignment="0" min="-2" pref="85" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="32767" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="Deportes" min="-2" max="-2" attributes="0"/>
+                  <Component id="Programacion" min="-2" max="-2" attributes="0"/>
+                  <Component id="Robotica" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="Idiomas" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="CineYSeries" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="Moda" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="Turismo" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="Gastronomia" alignment="0" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace min="-2" pref="117" max="-2" attributes="0"/>
+          </Group>
+          <Group type="102" alignment="0" attributes="0">
+              <EmptySpace min="-2" pref="49" max="-2" attributes="0"/>
+              <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+              <EmptySpace pref="86" max="32767" attributes="0"/>
+              <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="55" max="-2" attributes="0"/>
+          </Group>
+          <Group type="102" alignment="0" attributes="0">
+              <EmptySpace min="-2" pref="243" max="-2" attributes="0"/>
+              <Component id="btnCancelar" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
+          </Group>
+      </Group>
+    </DimensionLayout>
+    <DimensionLayout dim="1">
+      <Group type="103" groupAlignment="0" attributes="0">
+          <Group type="102" alignment="0" attributes="0">
+              <EmptySpace min="-2" pref="49" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="Arte" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="Deportes" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="Fotografia" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="Programacion" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="Musica" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="Robotica" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="Videojuegos" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="Idiomas" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="Baile" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="CineYSeries" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="Coleccionismo" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="Moda" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="Jardineria" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="Turismo" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="Lectura" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="Gastronomia" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace min="-2" pref="42" max="-2" attributes="0"/>
+              <Component id="btnCancelar" min="-2" max="-2" attributes="0"/>
+              <EmptySpace pref="50" max="32767" attributes="0"/>
+          </Group>
+      </Group>
+    </DimensionLayout>
+  </Layout>
+  <SubComponents>
+    <Component class="javax.swing.JLabel" name="jLabel1">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Selecciona tus hobbies (minimo 2):"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="Arte">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Arte"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="Fotografia">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Fotografia"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="Musica">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Musica"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="Videojuegos">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Videojuegos"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="Baile">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Baile"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="Coleccionismo">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Coleccionismo"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="Jardineria">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Jardineria"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="Lectura">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Lectura"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabel2">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Selecciona temas de tu interes (minimo 2):"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="Deportes">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Deportes"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="Programacion">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Programacion"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="Robotica">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Robotica"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="Idiomas">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Idiomas"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="CineYSeries">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Cine y series"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="Moda">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Moda"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="Turismo">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Turismo"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="Gastronomia">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Gastronomia"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="btnCancelar">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Cancelar"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCancelarActionPerformed"/>
+      </Events>
+    </Component>
+  </SubComponents>
+</Form>

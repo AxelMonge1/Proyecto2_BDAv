@@ -35,6 +35,11 @@ public class frmPrincipal extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         pnlPrincipal = new javax.swing.JPanel();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        menuPrincipal = new javax.swing.JMenu();
+        miPerfil = new javax.swing.JMenuItem();
+        miDescubrir = new javax.swing.JMenuItem();
+        miCerrarSesion = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -66,6 +71,21 @@ public class frmPrincipal extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
+        menuPrincipal.setText("Menu");
+
+        miPerfil.setText("Ver tu perfil");
+        menuPrincipal.add(miPerfil);
+
+        miDescubrir.setText("Descubre nueva gente");
+        menuPrincipal.add(miDescubrir);
+
+        miCerrarSesion.setText("Cerrar sesion");
+        menuPrincipal.add(miCerrarSesion);
+
+        jMenuBar1.add(menuPrincipal);
+
+        setJMenuBar(jMenuBar1);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -75,7 +95,7 @@ public class frmPrincipal extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(43, Short.MAX_VALUE)
+                .addContainerGap(21, Short.MAX_VALUE)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -109,7 +129,12 @@ public class frmPrincipal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JMenu menuPrincipal;
+    private javax.swing.JMenuItem miCerrarSesion;
+    private javax.swing.JMenuItem miDescubrir;
+    private javax.swing.JMenuItem miPerfil;
     private javax.swing.JPanel pnlPrincipal;
     // End of variables declaration//GEN-END:variables
 }

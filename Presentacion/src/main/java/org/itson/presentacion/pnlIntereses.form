@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Form version="1.3" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JPanelFormInfo">
+  <AuxValues>
+    <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
+    <AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_generateFQN" type="java.lang.Boolean" value="true"/>
+    <AuxValue name="FormSettings_generateMnemonicsCode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_i18nAutoMode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_layoutCodeTarget" type="java.lang.Integer" value="1"/>
+    <AuxValue name="FormSettings_listenerGenerationStyle" type="java.lang.Integer" value="3"/>
+    <AuxValue name="FormSettings_variablesLocal" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_variablesModifier" type="java.lang.Integer" value="2"/>
+  </AuxValues>
+
+  <Layout>
+    <DimensionLayout dim="0">
+      <Group type="103" groupAlignment="0" attributes="0">
+          <Group type="102" attributes="0">
+              <EmptySpace min="-2" pref="50" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="1" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="HobLectura" min="-2" max="-2" attributes="0"/>
+                                  <Component id="HobJardineria" min="-2" max="-2" attributes="0"/>
+                                  <Component id="HobColeccion" min="-2" max="-2" attributes="0"/>
+                                  <Component id="HobBaile" min="-2" max="-2" attributes="0"/>
+                                  <Component id="HobVideojuegos" min="-2" max="-2" attributes="0"/>
+                                  <Component id="HobMusica" min="-2" max="-2" attributes="0"/>
+                                  <Component id="HobFotografia" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace max="32767" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="IntProgramacion" min="-2" max="-2" attributes="0"/>
+                                  <Component id="IntRobotica" min="-2" max="-2" attributes="0"/>
+                                  <Component id="IntIdiomas" min="-2" max="-2" attributes="0"/>
+                                  <Component id="IntCine" min="-2" max="-2" attributes="0"/>
+                                  <Component id="IntModa" min="-2" max="-2" attributes="0"/>
+                                  <Component id="IntTurismo" min="-2" max="-2" attributes="0"/>
+                                  <Component id="IntGastronomia" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace min="-2" pref="57" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="1" attributes="0">
+                              <Component id="HobArte" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="32767" attributes="0"/>
+                              <Component id="IntDeportes" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="82" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
+                      <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="197" max="-2" attributes="0"/>
+                      <Component id="btnCrearCuenta" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace pref="201" max="-2" attributes="0"/>
+                  </Group>
+              </Group>
+              <EmptySpace min="-2" pref="56" max="-2" attributes="0"/>
+          </Group>
+      </Group>
+    </DimensionLayout>
+    <DimensionLayout dim="1">
+      <Group type="103" groupAlignment="0" attributes="0">
+          <Group type="102" alignment="0" attributes="0">
+              <EmptySpace min="-2" pref="51" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="HobArte" min="-2" max="-2" attributes="0"/>
+                  <Component id="IntDeportes" alignment="0" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="HobFotografia" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="IntProgramacion" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="HobMusica" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="IntRobotica" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="HobVideojuegos" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="IntIdiomas" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="HobBaile" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="IntCine" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="HobColeccion" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="IntModa" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="IntTurismo" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="HobJardineria" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="HobLectura" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="IntGastronomia" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="btnCrearCuenta" min="-2" max="-2" attributes="0"/>
+              <EmptySpace pref="84" max="32767" attributes="0"/>
+          </Group>
+      </Group>
+    </DimensionLayout>
+  </Layout>
+  <SubComponents>
+    <Component class="javax.swing.JCheckBox" name="HobArte">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Arte"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="HobFotografia">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Fotografia"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="HobMusica">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Musica"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="HobVideojuegos">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Videojuegos"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="HobBaile">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Baile"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="HobColeccion">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Coleccionismo"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="HobJardineria">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Jardineria"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="HobLectura">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Lectura"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="IntDeportes">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Deportes"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="IntProgramacion">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Programaci&#xf3;n"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="IntRobotica">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Robotica"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="IntRoboticaActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="IntIdiomas">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Idiomas"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="IntIdiomasActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="IntCine">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Cine y series"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="IntCineActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="IntModa">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Moda"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="IntModaActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="IntTurismo">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Turismo"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="IntTurismoActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="IntGastronomia">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Gastronomia"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="IntGastronomiaActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabel1">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Selecciona tus hobbies (Minimo 2)"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabel2">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Selecciona temas de tu inter&#xe9;s (Minimo 2)"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="btnCrearCuenta">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Crear cuenta"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCrearCuentaActionPerformed"/>
+      </Events>
+    </Component>
+  </SubComponents>
+</Form>

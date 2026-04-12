@@ -43,12 +43,12 @@ public class Estudiante implements Serializable {
     private String contrasena;
     
     @Lob
-    @Column(name = "foto_perfil")
+    @Column(name = "foto_perfil", columnDefinition = "LONGBLOB")
     private byte[] foto;
     
     @ManyToMany
     @JoinTable(name = "estudiante_aficion", joinColumns = @JoinColumn(name = "estudiante_id"), inverseJoinColumns = @JoinColumn(name = "aficion_id"))
-    private Set<Aficion> aficiones;
+    private Set<Aficion> aficiones = new HashSet<>();
     
     @OneToMany(mappedBy = "estudiante1", cascade = CascadeType.ALL)
     private Set<Match> matchesIniciados = new HashSet<>();

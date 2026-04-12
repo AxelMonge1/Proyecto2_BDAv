@@ -4,6 +4,12 @@
  */
 package org.itson.presentacion;
 
+import com.mycompany.negocios.AficionService;
+import com.mycompany.negocios.IAficionService;
+import java.util.HashSet;
+import models.Aficion;
+import models.TipoAficion;
+
 /**
  *
  * @author HP
@@ -17,6 +23,7 @@ public class frmInicio extends javax.swing.JFrame {
      */
     public frmInicio() {
         initComponents();
+        crearAficiones();
         pnlInicioSesion i = new pnlInicioSesion();
         i.setSize(elPanel.getWidth(), elPanel.getWidth());
         elPanel.removeAll();
@@ -24,6 +31,96 @@ public class frmInicio extends javax.swing.JFrame {
         elPanel.revalidate();
         elPanel.repaint();
         setTitle("Inicio de sesión");
+    }
+    
+    protected void pasarACrearCuenta(){
+        frmCrearCuenta registro = new frmCrearCuenta();
+        registro.setVisible(true);
+        this.dispose();
+    }
+    
+    private void crearAficiones(){
+        Aficion arte = new Aficion();
+        arte.setNombre("Arte");
+        arte.setEstudiantes(new HashSet<>());
+        arte.setTipoAficion(TipoAficion.HOBBY);
+        Aficion fotografia = new Aficion();
+        fotografia.setNombre("Fotografia");
+        fotografia.setEstudiantes(new HashSet<>());
+        fotografia.setTipoAficion(TipoAficion.HOBBY);
+        Aficion musica = new Aficion();
+        musica.setNombre("Musica");
+        musica.setEstudiantes(new HashSet<>());
+        musica.setTipoAficion(TipoAficion.HOBBY);
+        Aficion videojuegos = new Aficion();
+        videojuegos.setNombre("Videojuegos");
+        videojuegos.setEstudiantes(new HashSet<>());
+        videojuegos.setTipoAficion(TipoAficion.HOBBY);
+        Aficion baile = new Aficion();
+        baile.setNombre("Baile");
+        baile.setEstudiantes(new HashSet<>());
+        baile.setTipoAficion(TipoAficion.HOBBY);
+        Aficion coleccionismo = new Aficion();
+        coleccionismo.setNombre("Coleccionismo");
+        coleccionismo.setEstudiantes(new HashSet<>());
+        coleccionismo.setTipoAficion(TipoAficion.HOBBY);
+        Aficion jardineria = new Aficion();
+        jardineria.setNombre("Jardineria");
+        jardineria.setEstudiantes(new HashSet<>());
+        jardineria.setTipoAficion(TipoAficion.HOBBY);
+        Aficion lectura = new Aficion();
+        lectura.setNombre("Lectura");
+        lectura.setEstudiantes(new HashSet<>());
+        lectura.setTipoAficion(TipoAficion.HOBBY);
+        Aficion deportes = new Aficion();
+        deportes.setNombre("Deportes");
+        deportes.setEstudiantes(new HashSet<>());
+        deportes.setTipoAficion(TipoAficion.INTERES);
+        Aficion programacion = new Aficion();
+        programacion.setNombre("Programacion");
+        programacion.setEstudiantes(new HashSet<>());
+        programacion.setTipoAficion(TipoAficion.INTERES);
+        Aficion robotica = new Aficion();
+        robotica.setNombre("Robotica");
+        robotica.setEstudiantes(new HashSet<>());
+        robotica.setTipoAficion(TipoAficion.INTERES);
+        Aficion idiomas = new Aficion();
+        idiomas.setNombre("Idiomas");
+        idiomas.setEstudiantes(new HashSet<>());
+        idiomas.setTipoAficion(TipoAficion.INTERES);
+        Aficion cine = new Aficion();
+        cine.setNombre("Cine y series");
+        cine.setEstudiantes(new HashSet<>());
+        cine.setTipoAficion(TipoAficion.INTERES);
+        Aficion moda = new Aficion();
+        moda.setNombre("Moda");
+        moda.setEstudiantes(new HashSet<>());
+        moda.setTipoAficion(TipoAficion.INTERES);
+        Aficion turismo = new Aficion();
+        turismo.setNombre("Turismo");
+        turismo.setEstudiantes(new HashSet<>());
+        turismo.setTipoAficion(TipoAficion.INTERES);
+        Aficion gastronomia = new Aficion();
+        gastronomia.setNombre("Gastronomia");
+        gastronomia.setEstudiantes(new HashSet<>());
+        gastronomia.setTipoAficion(TipoAficion.INTERES);
+        IAficionService as = new AficionService();
+        as.guardar(arte);
+        as.guardar(fotografia);
+        as.guardar(musica);
+        as.guardar(videojuegos);
+        as.guardar(baile);
+        as.guardar(coleccionismo);
+        as.guardar(jardineria);
+        as.guardar(lectura);
+        as.guardar(deportes);
+        as.guardar(programacion);
+        as.guardar(robotica);
+        as.guardar(idiomas);
+        as.guardar(cine);
+        as.guardar(moda);
+        as.guardar(turismo);
+        as.guardar(gastronomia);
     }
 
     /**
