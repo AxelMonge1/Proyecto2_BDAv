@@ -4,6 +4,26 @@
  */
 package org.itson.presentacion;
 
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.GridLayout;
+import java.awt.Image;
+import java.io.IOException;
+import java.net.URL;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
 import models.Estudiante;
 
 /**
@@ -108,6 +128,156 @@ public class frmPrincipal extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(() -> new frmPrincipal(e).setVisible(true));
     }
 
+    public class MenuPrincipal extends JFrame{
+    private IPersistenciaFachada persistencia;
+    
+    public MenuPrincipal(IPersistenciaFachada persistencia){
+        this.persistencia = persistencia;
+        setTitle("\UniLink");
+        setSize(500, 600);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
+        setLayout(new BorderLayout());
+        
+        //Logo de encabezado
+        ImageIcon icono = new ImageIcon(getClass().getResource("/Utilidades/logoUK.png"));
+        Image imagenOriginal = icono.getImage();
+        Image imagenEscalada = imagenOriginal.getScaledInstance(250, 250, Image.SCALE_SMOOTH);
+        ImageIcon iconoEscalado = new ImageIcon(imagenEscalada);
+        JLabel logoLabel = new JLabel(iconoEscalado);
+        logoLabel.setHorizontalAlignment(JLabel.CENTER);
+        logoLabel.setBorder(BorderFactory.createEmptyBorder(20, 0, 10, 0));
+        add(logoLabel, BorderLayout.NORTH);
+        
+        //Hora actual en el título
+        JLabel lbHora = new JLabel("Hora: --:--");
+        
+        Thread reloj = new Thread(()->{
+            DateTimeFormatter form = DateTimeFormatter.ofPattern("HH:mm:ss");
+            while(true){
+                try{
+                    String horaA = LocalTime.now().format(form);
+                    SwingUtilities.invokeLater(()-> lbHora.setText("Hora: " + horaA));
+                    setTitle("SMenu principal" + horaA);
+                    Thread.sleep(1000);
+                }catch(InterruptedException e){
+                    e.printStackTrace();
+                    break;
+                }
+            }
+        });
+        
+        reloj.start();
+        
+        //Panel de botones
+        JPanel panelBotones = new JPanel(new GridLayout(0, 1, 15, 15));
+        panelBotones.setBorder(BorderFactory.createEmptyBorder(20, 40, 20, 40));
+        panelBotones.setBackground(new Color(245, 240, 255));
+        Font fuenteBoton = new Font("Segoe UI", Font.BOLD, 16);
+        //Botones al estilo de mi logo
+        JButton btnPacientes = crearBoton("Pacientes", getClass().getResource("/recursos/btnMPacientes.png"), fuenteBoton);
+        JButton btnMedicos = crearBoton("Médicos",getClass().getResource("/recursos/btnMedico.png"), fuenteBoton);
+        JButton btnEspecialidades = crearBoton("Especialidades",getClass().getResource("/recursos/btnEspecialidad.png"), fuenteBoton);
+        JButton btnEquipos = crearBoton("Inventarios", getClass().getResource("/recursos/btnInventarios.png"), fuenteBoton);
+        JButton btnSalir = crearBoton("Salir", getClass().getResource("/recursos/btnSalirSIS.png"), fuenteBoton);
+
+        
+        //Acciones
+        btnPacientes.addActionListener(e -> {
+            try {
+                abrirMenuPacientes();
+            } catch (IOException ex) {
+                Logger.getLogger(MenuPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        });
+        btnMedicos.addActionListener(e -> {
+            try {
+                abrirMenuMedicos();
+            } catch (IOException ex) {
+                Logger.getLogger(MenuPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        });
+        btnEspecialidades.addActionListener(e -> {
+            try {
+                abrirMenuEspecialidades();
+            } catch (IOException ex) {
+                Logger.getLogger(MenuPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        });
+        btnEquipos.addActionListener(e -> {
+            try {
+                abrirMenuInventarios();
+            } catch (IOException ex) {
+                Logger.getLogger(MenuPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        });
+        btnSalir.addActionListener(e -> salirDelSistema());
+        
+        //Agregar botones al panel
+        panelBotones.add(btnPacientes);
+        panelBotones.add(btnMedicos);
+        panelBotones.add(btnEspecialidades);
+        panelBotones.add(btnEquipos);
+        panelBotones.add(btnConsultas);
+        panelBotones.add(btnSalir);
+        add(panelBotones, BorderLayout.CENTER);
+        setVisible(true);
+        
+        
+    }
+    private void salirDelSistema(){
+        int confir = JOptionPane.showConfirmDialog(this, "¿Está seguro de que desea realizar esta acción?", "Confirmar salida",
+            JOptionPane.YES_OPTION);
+        if (confir == JOptionPane.YES_OPTION){
+            System.exit(0);
+        }
+    }
+    //Metodo para crear crear los botones con estilo
+    private JButton crearBoton(String texto, URL urlIcono, Font fuente){
+        ImageIcon icono = null;
+        
+        if(urlIcono != null){
+            Image imagenOriginal = new ImageIcon(urlIcono).getImage();
+            Image imagenEscalada = imagenOriginal.getScaledInstance(65, 65, Image.SCALE_SMOOTH);
+            icono = new ImageIcon(imagenEscalada);
+        }else{
+            System.out.println("No se encontro el icono para: " + texto);
+            icono = new ImageIcon();
+        }
+        JButton boton = new JButton(texto, icono);
+        boton.setFont(fuente);
+        boton.setFocusPainted(false);
+        boton.setBackground(Color.WHITE);
+        boton.setForeground(new Color(25, 25, 112)); //Azul real
+        boton.setBorder(BorderFactory.createLineBorder(new Color(128, 0, 128), 2)); //Purpura
+        boton.setHorizontalAlignment(SwingConstants.LEFT);
+        boton.setIconTextGap(15);
+        return boton;
+    }
+    
+    //Metodos de navegacion
+    private void abrirMenuPacientes() throws IOException{
+        PacientesV ventanaPacientes = new PacientesV(new PersistenciaFachada());
+        ventanaPacientes.setVisible(true);
+    }
+    private void abrirMenuMedicos()throws IOException{
+        MedicosV ventanaMedicos = new MedicosV(new PersistenciaFachada());
+        ventanaMedicos.setVisible(true);
+    }
+    private void abrirMenuEspecialidades() throws IOException{
+        EspecialidadV ventanaEsp = new EspecialidadV(new PersistenciaFachada());
+        ventanaEsp.setVisible(true);
+    }
+    private void abrirMenuInventarios() throws IOException{
+        InventariosV ventanaInven = new InventariosV(new PersistenciaFachada());
+        ventanaInven.setVisible(true);
+    }
+   
+    public static void main(String[] args) throws IOException{
+        IPersistenciaFachada fachada = new PersistenciaFachada();
+        new MenuPrincipal(fachada).setVisible(true);
+    }
+}
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel pnlPrincipal;

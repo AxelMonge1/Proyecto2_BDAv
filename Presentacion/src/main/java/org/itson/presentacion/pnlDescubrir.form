@@ -43,11 +43,17 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Me interesa"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnInteresaActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnNoInteresa">
       <Properties>
         <Property name="text" type="java.lang.String" value="No me interesa"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnNoInteresaActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

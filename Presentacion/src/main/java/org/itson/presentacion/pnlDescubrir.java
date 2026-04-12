@@ -4,6 +4,13 @@
  */
 package org.itson.presentacion;
 
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.event.ActionListener;
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author EdgarUris
@@ -15,8 +22,28 @@ public class pnlDescubrir extends javax.swing.JPanel {
      */
     public pnlDescubrir() {
         initComponents();
+        personalizarComp();
     }
-
+    private void personalizarComp(){
+        btnInteresa = crearBoton("Me interesa", new Color(46, 134, 193), 
+                Color.WHITE, 
+                e -> JOptionPane.showMessageDialog(this,"Preferencia guardada."));
+        btnNoInteresa = crearBoton("No me interesa", new Color(192, 57, 43), 
+                Color.WHITE, 
+                e -> JOptionPane.showMessageDialog(this,"Has indicado que no te interesa este contenido."));
+     
+    }
+    private JButton crearBoton(String texto, Color fondo, Color textColor, ActionListener evento){
+        JButton boton = new JButton(texto);
+        boton.setFont(new Font("Segoe UI", Font.BOLD, 14));
+        boton.setBackground(fondo);
+        boton.setForeground(textColor);
+        boton.setFocusPainted(false);
+        boton.setBorder(BorderFactory.createLineBorder(new Color(128, 0, 128), 2));
+        boton.addActionListener(evento);
+        return boton;
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -30,8 +57,10 @@ public class pnlDescubrir extends javax.swing.JPanel {
         btnNoInteresa = new javax.swing.JButton();
 
         btnInteresa.setText("Me interesa");
+        btnInteresa.addActionListener(this::btnInteresaActionPerformed);
 
         btnNoInteresa.setText("No me interesa");
+        btnNoInteresa.addActionListener(this::btnNoInteresaActionPerformed);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -54,6 +83,14 @@ public class pnlDescubrir extends javax.swing.JPanel {
                 .addGap(37, 37, 37))
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnNoInteresaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNoInteresaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnNoInteresaActionPerformed
+
+    private void btnInteresaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInteresaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnInteresaActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
