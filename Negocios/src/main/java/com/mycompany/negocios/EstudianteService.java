@@ -141,4 +141,14 @@ public class EstudianteService implements IEstudianteService{
             em.close();
         }
     }
+
+    @Override
+    public byte[] getFotoDePerfil(Long idEstudiante) {
+        EntityManager em = JPAUtil.getEntityManager();
+        try{
+            return estudianteDAO.getFotoDePerfil(idEstudiante, em);
+        }finally{
+            em.close();
+        }
+    }
 }

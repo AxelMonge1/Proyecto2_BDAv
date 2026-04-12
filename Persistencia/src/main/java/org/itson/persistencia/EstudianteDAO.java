@@ -26,6 +26,7 @@ public class EstudianteDAO implements IEstudianteDAO {
         return query.getResultList();
     }
     
+    @Override
     public Estudiante buscarPorCorreo(String correo, EntityManager em){
         TypedQuery<Estudiante> query = em.createQuery("SELECT e FROM Estudiante e WHERE correo LIKE :correo", Estudiante.class);
         query.setParameter("correo", "%" + correo + "%");
@@ -92,6 +93,15 @@ public class EstudianteDAO implements IEstudianteDAO {
                     }
             });
             return estudiantes;
+        }
+        return null;
+    }
+
+    @Override
+    public byte[] getFotoDePerfil(Long idEstudiante, EntityManager em) {
+        Estudiante estudiante = em.find(Estudiante.class, idEstudiante);
+        if(estudiante != null){
+            return estudiante.getFoto();
         }
         return null;
     }

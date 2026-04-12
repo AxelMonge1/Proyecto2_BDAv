@@ -91,11 +91,11 @@ public class pnlInicioSesion extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnVerPass))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(264, 264, 264)
-                        .addComponent(btnCrearCuenta))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(245, 245, 245)
-                        .addComponent(btnIniciarSesion)))
+                        .addComponent(btnIniciarSesion))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(259, 259, 259)
+                        .addComponent(btnCrearCuenta, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(188, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -112,14 +112,14 @@ public class pnlInicioSesion extends javax.swing.JPanel {
                 .addGap(4, 4, 4)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(pswContra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnVerPass))
+                    .addComponent(btnVerPass, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(btnIniciarSesion)
                 .addGap(61, 61, 61)
                 .addComponent(lblNoCuenta)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnCrearCuenta)
-                .addContainerGap(82, Short.MAX_VALUE))
+                .addComponent(btnCrearCuenta, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(71, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -138,7 +138,7 @@ public class pnlInicioSesion extends javax.swing.JPanel {
                     "Cuenta no encontrada", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        if(e.getContrasena() != contra){
+        if(!e.getContrasena().equals(contra)){
             JOptionPane.showMessageDialog(this, "Contraseña incorrecta, intenta de nuevo", 
                     "Contraseña incorrecta", JOptionPane.INFORMATION_MESSAGE);
             return;

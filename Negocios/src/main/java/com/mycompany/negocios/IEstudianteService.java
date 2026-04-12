@@ -15,4 +15,5 @@ public interface IEstudianteService extends IGenericoService<Estudiante, Long>{
     List<Estudiante> buscarPorNombre(String nombre);
     List<Estudiante> likesDados(Long idEstudiante);
     List<Estudiante> likesRecibidos(Long idEstudiante);
+    byte[] getFotoDePerfil(Long idEstudiante);
 }
