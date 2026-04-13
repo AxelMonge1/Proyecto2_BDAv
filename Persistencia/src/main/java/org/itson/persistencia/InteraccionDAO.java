@@ -45,5 +45,14 @@ public class InteraccionDAO implements iInteraccionDAO {
         return query.getResultList();
     }
     
+    public Interaccion buscarInteraccion(Long idOrigen, Long idDestino, EntityManager em) {
+    List<Interaccion> lista = em.createQuery(
+        "SELECT i FROM Interaccion i WHERE i.estudianteOrigen.id = :origen AND i.estudianteDestino.id = :destino",
+        Interaccion.class
+    ).setParameter("origen", idOrigen).setParameter("destino", idDestino).getResultList();
+
+    return lista.isEmpty() ? null : lista.get(0);
+}
+    
     
 }

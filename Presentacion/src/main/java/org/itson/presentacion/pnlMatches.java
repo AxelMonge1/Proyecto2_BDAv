@@ -66,11 +66,7 @@ public class pnlMatches extends JPanel {
 
         add(panelBusqueda, BorderLayout.NORTH);
 
-        
-        String[] columnas = {"Nombre", "Intereses", "Carrera"};
-        DefaultTableModel modelo = new DefaultTableModel(columnas, 0);
-
-        tablaResultados = new JTable(modelo);
+        tablaResultados = new JTable();
         JScrollPane scrollPane = new JScrollPane(tablaResultados);
         
         JPanel panelTabla = new JPanel(new BorderLayout());
@@ -103,8 +99,8 @@ public class pnlMatches extends JPanel {
     }
     
     private void cargarMatches(){
-        List<Match> matches = matchService.listarMatchesPorEstudiante(Long.valueOf(e.getId()));
-        DefaultTableModel modelo = matchService.obtenerTablaConLista(matches);
+        List<Match> matches = matchService.listarMatchesPorEstudiante(Long.valueOf(padre.getEstudianteEnSesion().getId()));
+        DefaultTableModel modelo = matchService.obtenerTablaConLista(matches, padre.getEstudianteEnSesion().getId());
         tablaResultados.setModel(modelo);
     }
     

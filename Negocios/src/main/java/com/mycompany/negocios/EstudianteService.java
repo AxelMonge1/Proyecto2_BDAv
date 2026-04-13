@@ -184,7 +184,7 @@ public class EstudianteService implements IEstudianteService{
     public DefaultTableModel obtenerTablaConLista(List<Estudiante> estudiantes){
         String[] columnas = {"NOMBRE", "CARRERA", "SEMESTRE"};
         DefaultTableModel modelo = new DefaultTableModel(null, columnas);
-        estudiantes.forEach(e -> modelo.addRow(new Object[]{e.getNombre(), e.getCarrera(), e.getSemestre()}));
+        estudiantes.forEach(e -> modelo.addRow(new Object[]{e.getNombre(), e.getCarrera(), e.getSemestre().toString()}));
         return modelo;
     }
 }

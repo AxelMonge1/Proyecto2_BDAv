@@ -8,8 +8,11 @@ import jakarta.persistence.EntityManager;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 import models.Estudiante;
+import models.Interaccion;
 import models.Match;
+import models.TipoInteraccion;
 import org.itson.persistencia.IMatchDAO;
+import org.itson.persistencia.InteraccionDAO;
 import org.itson.persistencia.MatchDAO;
 import org.itson.utilidades.JPAUtil;
 
@@ -105,10 +108,92 @@ public class MatchService implements IMatchService{
         }
     }
     
-    public DefaultTableModel obtenerTablaConLista(List<Match> matches){
+     public void guardarConMatch(Interaccion interaccion) {
+        EntityManager em = JPAUtil.getEntityManager();
+        MatchService matchService = new MatchService();
+        InteraccionDAO interaccionDAO = new InteraccionDAO();
+
+        try {
+            em.getTransaction().begin();
+
+            // Guardar interacción
+            interaccionDAO.agregar(interaccion, em);
+
+            Long idOrigen = interaccion.getEstudianteOrigen().getId();
+            Long idDestino = interaccion.getEstudianteDestino().getId();
+
+            // Buscar interacción inversa
+            Interaccion inversa = interaccionDAO.buscarInteraccion(
+                idDestino, idOrigen, em
+            );
+            
+            if (interaccion.getTipoInteraccion() == TipoInteraccion.LIKE && inversa != null) {
+
+                boolean existeMatch = matchService.existeMatch(idOrigen, idDestino);
+
+                if (!existeMatch) {
+                    Match match = new Match();
+                    match.setEstudiante1(interaccion.getEstudianteOrigen());
+                    match.setEstudiante2(interaccion.getEstudianteDestino());
+
+                    em.persist(match);
+                }
+            }
+
+            em.getTransaction().commit();
+
+        } catch (Exception ex) {
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+            throw ex;
+        } finally {
+            em.close();
+        }
+    }
+    
+public DefaultTableModel obtenerTablaConLista(List<Match> matches, Long idActual) {
         String[] columnas = {"Nombre", "Carrera", "Semestre"};
         DefaultTableModel modelo = new DefaultTableModel(null, columnas);
-        matches.forEach(e -> modelo.addRow(new Object[]{e.getEstudiante1().getNombre(), e.getEstudiante1().getCarrera(), e.getEstudiante1().getSemestre()}));
+
+        matches.forEach(m -> {
+            Estudiante otro;
+
+            if (m.getEstudiante1().getId().equals(idActual)) {
+                otro = m.getEstudiante2();
+            } else {
+                otro = m.getEstudiante1();
+            }
+
+            modelo.addRow(new Object[]{
+                otro.getNombre(),
+                otro.getCarrera(),
+                otro.getSemestre()
+            });
+        });
+
         return modelo;
+    }
+
+ public boolean existeMatch(Long id1, Long id2) {
+        EntityManager em = JPAUtil.getEntityManager();
+        try {
+            Match match = em.createQuery(
+                "SELECT m FROM Match m WHERE " +
+                "(m.estudiante1.id = :id1 AND m.estudiante2.id = :id2) OR " +
+                "(m.estudiante1.id = :id2 AND m.estudiante2.id = :id1)",
+                Match.class
+            )
+            .setParameter("id1", id1)
+            .setParameter("id2", id2)
+            .getResultStream()
+            .findFirst()
+            .orElse(null);
+
+            return match != null;
+
+        } finally {
+            em.close();
+        }
     }
 }
