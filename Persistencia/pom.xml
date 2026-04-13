@@ -15,6 +15,7 @@
             <groupId>org.itson</groupId>
             <artifactId>Utilidades</artifactId>
             <version>1.0-SNAPSHOT</version>
+            <type>jar</type>
         </dependency>
     </dependencies>
     <properties>

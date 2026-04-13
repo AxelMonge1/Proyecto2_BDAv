@@ -19,8 +19,9 @@ public class MatchDAO implements IMatchDAO{
     @Override
     public List<Match> listarMatchesPorEstudiante(Long idEstudiante, EntityManager em) {
         Estudiante estudiante = em.find(Estudiante.class, idEstudiante);
-        TypedQuery<Match> query = em.createQuery("SELECT m FROM Match m WHERE m.estudiante1 = :estudiante", Match.class);
+        TypedQuery<Match> query = em.createQuery("SELECT m FROM Match m WHERE m.estudiante1 = :estudiante OR m.estudiante2 = :estudiante2", Match.class);
         query.setParameter("estudiante", estudiante);
+        query.setParameter("estudiante2", estudiante);
         query.setFirstResult(0);
         query.setMaxResults(100);
         return query.getResultList();

@@ -98,7 +98,7 @@ public class pnlExplorar extends JPanel {
 
         // Listeners
         btnLike.addActionListener(e -> {
-            mandarInteraccionLike(indiceActual);
+            mandarInteraccionLike(estudiantes.get(indiceActual));
             mostrarSiguientePerfil();
                     });
         btnDislike.addActionListener(e -> {
@@ -134,7 +134,6 @@ public class pnlExplorar extends JPanel {
             lblDescripcion.setText("Descripcion: " + est.getDescripcion());
             
             ImageIcon fotoPerfil = null;
-            lblFoto.setText("Error al cargar la foto");
 
             //foto
         try{
@@ -143,6 +142,7 @@ public class pnlExplorar extends JPanel {
             Image imagenEscalada = bi.getScaledInstance(lblFoto.getWidth(), lblFoto.getHeight(), Image.SCALE_SMOOTH);
             fotoPerfil = new ImageIcon(imagenEscalada);
         }catch(IOException ex){
+            lblFoto.setText("Error al cargar la foto");
             ex.printStackTrace();
         }
         if(fotoPerfil == null){
@@ -169,8 +169,7 @@ public class pnlExplorar extends JPanel {
         }
     }
     
-    private void mandarInteraccionLike(int indice){
-        Estudiante estInteractuado = new EstudianteService().buscarPorId(Long.valueOf(indice+1));
+    private void mandarInteraccionLike(Estudiante estInteractuado){
         frmVentanaPrincipal padre = (frmVentanaPrincipal) SwingUtilities.getWindowAncestor(this);
         Estudiante estInteractua = padre.getEstudianteEnSesion();
         

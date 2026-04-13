@@ -115,7 +115,7 @@ public class InteraccionService implements iInteraccionService {
             );
 
            
-            if (interaccion.getTipoInteraccion() == TipoInteraccion.LIKE && inversa != null) {
+            if (interaccion.getTipoInteraccion() == TipoInteraccion.LIKE && inversa != null && inversa.getTipoInteraccion() == TipoInteraccion.LIKE) {
 
                 boolean existeMatch = matchService.existeMatch(idOrigen, idDestino);
 
