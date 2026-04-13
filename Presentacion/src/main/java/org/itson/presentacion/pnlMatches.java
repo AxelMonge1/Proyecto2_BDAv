@@ -23,6 +23,7 @@ import javax.swing.table.DefaultTableModel;
 /**
  *
  * @author Jenifer Flores
+ * @author EdgarUris
  */
 public class pnlMatches extends JPanel {
     
@@ -30,6 +31,7 @@ public class pnlMatches extends JPanel {
     private JTextField txtBusqueda;
     private JComboBox<String> cmbTipoBusqueda;
     private JButton btnRegresar;
+    private JButton btnBuscar;
 
     public pnlMatches() {
         
@@ -44,10 +46,11 @@ public class pnlMatches extends JPanel {
         cmbTipoBusqueda = new JComboBox<>(new String[]{"Nombre", "Intereses"});
         panelBusqueda.add(cmbTipoBusqueda);
 
+        btnBuscar = crearBoton("Buscar", new Font("Segoe UI", Font.BOLD, 16));
+        
         txtBusqueda = new JTextField(20);
         panelBusqueda.add(txtBusqueda);
-
-        panelBusqueda.add(new JButton("Buscar")); // Botón decorativo por ahora
+        panelBusqueda.add(btnBuscar);
 
         add(panelBusqueda, BorderLayout.NORTH);
 

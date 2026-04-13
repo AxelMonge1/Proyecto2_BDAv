@@ -159,6 +159,7 @@ public class frmVentanaPrincipal extends JFrame{
     public void ver() throws IOException{
         new frmVentanaPrincipal(est).setVisible(true);
     }
+    
     //obtener el estudiante en sesion
     public Estudiante getEstudianteEnSesion(){
         return est;
