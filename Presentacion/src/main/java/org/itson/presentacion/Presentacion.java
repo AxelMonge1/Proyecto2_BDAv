@@ -4,6 +4,10 @@
 
 package org.itson.presentacion;
 
+import com.mycompany.negocios.AficionService;
+import jakarta.persistence.EntityManager;
+import org.itson.utilidades.JPAUtil;
+
 /**
  *
  * @author EdgarUris
@@ -11,6 +15,20 @@ package org.itson.presentacion;
 public class Presentacion {
 
     public static void main(String[] args) {
-        System.out.println("Hello World!");
+        //Para que no genere error al usar drop and create
+        try {
+            EntityManager em = JPAUtil.getEntityManager();
+            em.close();
+            AficionService aficionServi = new AficionService();
+            aficionServi.inicializarAficiones();
+            java.awt.EventQueue.invokeLater(() -> {
+                new frmInicio().setVisible(true);
+            });
+            
+        } catch (Exception ex) {
+            System.err.println("Error al inicializar la base de datos: " + ex.getMessage());
+            ex.printStackTrace();
+        }
+        
     }
 }

@@ -6,10 +6,12 @@ package com.mycompany.negocios;
 
 import jakarta.persistence.EntityManager;
 import java.util.List;
+import javax.swing.table.DefaultTableModel;
 import models.Estudiante;
 import org.itson.persistencia.EstudianteDAO;
 import org.itson.persistencia.IEstudianteDAO;
 import org.itson.utilidades.JPAUtil;
+import org.itson.utilidades.RegexUtil;
 
 /**
  *
@@ -18,18 +20,24 @@ import org.itson.utilidades.JPAUtil;
 public class EstudianteService implements IEstudianteService{
     
     private IEstudianteDAO estudianteDAO;
+    private RegexUtil regex;
 
     public EstudianteService() {
         this.estudianteDAO = new EstudianteDAO();
+        this.regex = new RegexUtil();
     }
     
-    private void validar(Estudiante estudiante){
+    public boolean validar(Estudiante estudiante){
         if (estudiante == null) {
             throw new IllegalArgumentException("El estudiante no puede ser nulo.");
         }
         if (estudiante.getNombre() == null || estudiante.getNombre().trim().isEmpty()) {
             throw new IllegalArgumentException("El nombre del estudiante es obligatorio.");
         }
+        if(!regex.validaCorreoEstudiante(estudiante.getCorreo())){
+            throw new IllegalArgumentException("El correo del estudiante debe ser el institucional");
+        }
+        return true;
     }
 
     @Override
@@ -133,5 +141,40 @@ public class EstudianteService implements IEstudianteService{
         }finally{
             em.close();
         }
+    }
+
+    @Override
+    public byte[] getFotoDePerfil(Long idEstudiante) {
+        EntityManager em = JPAUtil.getEntityManager();
+        try{
+            return estudianteDAO.getFotoDePerfil(idEstudiante, em);
+        }finally{
+            em.close();
+        }
+    }
+    
+    public DefaultTableModel obtenerTablaEstudiantes() {
+        EntityManager em = JPAUtil.getEntityManager();
+        String[] columnas = {"NOMBRE", "CARRERA", "SEMESTRE"};
+        DefaultTableModel modelo = new DefaultTableModel(null, columnas);
+        List<Estudiante> lista = estudianteDAO.listar(em);
+        lista.forEach(e -> modelo.addRow(new Object[]{e.getNombre(), e.getCarrera(), e.getSemestre()}));
+        return modelo;
+    }
+    
+    public DefaultTableModel obtenerTablaEstudiantesPorFiltro(String filtro) {
+        EntityManager em = JPAUtil.getEntityManager();
+        String[] columnas = {"NOMBRE", "CARRERA", "SEMESTRE"};
+        DefaultTableModel modelo = new DefaultTableModel(null, columnas);
+        List<Estudiante> lista = estudianteDAO.buscarPorNombre(filtro, em);
+        lista.forEach(e -> modelo.addRow(new Object[]{e.getNombre(), e.getCarrera(), e.getSemestre()}));
+        return modelo;
+    }
+    
+    public DefaultTableModel obtenerTablaConLista(List<Estudiante> estudiantes){
+        String[] columnas = {"NOMBRE", "CARRERA", "SEMESTRE"};
+        DefaultTableModel modelo = new DefaultTableModel(null, columnas);
+        estudiantes.forEach(e -> modelo.addRow(new Object[]{e.getNombre(), e.getCarrera(), e.getSemestre()}));
+        return modelo;
     }
 }

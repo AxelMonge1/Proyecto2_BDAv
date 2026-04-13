@@ -23,4 +23,12 @@ public interface IAficionDAO extends IGenericoDAO<Aficion, Long> {
      * Devuelve estudiantes con las mismas aficiones
      */
     List<Estudiante> estAficionesSim(Long idAficion, EntityManager em);
+    
+    /**
+     * 
+     * @param nombre
+     * @param em
+     * @return aficion con un nombre especifico
+     */
+    Aficion buscarPorNombre(String nombre, EntityManager em);
 }

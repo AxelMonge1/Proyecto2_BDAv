@@ -55,4 +55,13 @@ public class AficionDAO implements IAficionDAO{
         query.setMaxResults(100);
         return query.getResultList();
     }
+    
+    @Override
+    public Aficion buscarPorNombre(String nombre, EntityManager em){
+        TypedQuery<Aficion> query = em.createQuery("SELECT a FROM Aficion a WHERE a.nombre LIKE :nombre", Aficion.class);
+        query.setParameter("nombre", "%" + nombre + "%");
+        query.setFirstResult(0);
+        query.setMaxResults(100);
+        return query.getSingleResult();
+    }
 }

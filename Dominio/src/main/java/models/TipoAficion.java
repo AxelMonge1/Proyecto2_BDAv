@@ -9,5 +9,5 @@ package models;
  * @author axelm
  */
 public enum TipoAficion {
-    HOBBY,INTERES, ACADEMICO
+    HOBBY,INTERES,ACADEMICO
 }

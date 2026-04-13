@@ -8,6 +8,7 @@ import jakarta.persistence.EntityManager;
 import java.util.List;
 import models.Aficion;
 import models.Estudiante;
+import models.TipoAficion;
 import org.itson.persistencia.AficionDAO;
 import org.itson.persistencia.IAficionDAO;
 import org.itson.utilidades.JPAUtil;
@@ -21,6 +22,38 @@ public class AficionService implements IAficionService{
 
     public AficionService() {
         this.aficionDAO = new AficionDAO();
+    }
+    
+    public void inicializarAficiones(){
+        EntityManager em = JPAUtil.getEntityManager();
+        try {
+            if (aficionDAO.listar(em).isEmpty()) {
+                em.getTransaction().begin(); 
+                String[] aficionesHobbies = {"Arte","Fotografia","Musica","Videojuegos","Baile","Coleccionismo","Jardineria","Lectura"};
+                for (String nombre : aficionesHobbies) {
+                    Aficion nueva = new Aficion();
+                    nueva.setNombre(nombre);
+                    nueva.setTipoAficion(TipoAficion.HOBBY);
+                    aficionDAO.agregar(nueva, em);
+                }
+                String[] aficionesIntereses = {"Deportes","Programacion","Robotica","Idiomas","CineYSeries","Moda","Turismo","Gastronomia"};
+                for (String nombre : aficionesIntereses) {
+                    Aficion nueva = new Aficion();
+                    nueva.setNombre(nombre);
+                    nueva.setTipoAficion(TipoAficion.INTERES);
+                    aficionDAO.agregar(nueva, em);
+                }
+                em.getTransaction().commit(); 
+                System.out.println("Aficiones inicializadas correctamente.");
+            }
+        } catch (Exception e) {
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            em.close();
+        }
     }
 
     @Override

@@ -5,12 +5,14 @@
 package models;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
+import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import java.io.Serializable;
@@ -40,9 +42,15 @@ public class Estudiante implements Serializable {
     
     private String contrasena;
     
+    private Integer semestre;
+    
+    @Lob
+    @Column(name = "foto_perfil", columnDefinition = "LONGBLOB")
+    private byte[] foto;
+    
     @ManyToMany
     @JoinTable(name = "estudiante_aficion", joinColumns = @JoinColumn(name = "estudiante_id"), inverseJoinColumns = @JoinColumn(name = "aficion_id"))
-    private Set<Aficion> aficiones;
+    private Set<Aficion> aficiones = new HashSet<>();
     
     @OneToMany(mappedBy = "estudiante1", cascade = CascadeType.ALL)
     private Set<Match> matchesIniciados = new HashSet<>();
@@ -59,14 +67,24 @@ public class Estudiante implements Serializable {
     public Estudiante() {
     }
 
-    public Estudiante(Long id, String nombre, String carrera, String descripcion, String correo, String contrasena, Set<Aficion> aficiones, Set<Match> matchesIniciados, Set<Match> matchesRecibidos) {
+    public Estudiante(Long id, String nombre, String carrera, String descripcion, String correo, String contrasena, byte[] foto, Set<Aficion> aficiones, Integer semestre) {
         this.id = id;
         this.nombre = nombre;
         this.carrera = carrera;
         this.descripcion = descripcion;
         this.correo = correo;
         this.contrasena = contrasena;
+        this.foto = foto;
         this.aficiones = aficiones;
+        this.semestre = semestre;
+    }
+
+    public void setSemestre(Integer semestre) {
+        this.semestre = semestre;
+    }
+
+    public void setFoto(byte[] foto) {
+        this.foto = foto;
     }
 
     public void setInteraccionesHechas(Set<Interaccion> interaccionesHechas) {
@@ -107,6 +125,14 @@ public class Estudiante implements Serializable {
 
     public void setMatchesRecibidos(Set<Match> matchesRecibidos) {
         this.matchesRecibidos = matchesRecibidos;
+    }
+
+    public Integer getSemestre() {
+        return semestre;
+    }
+
+    public byte[] getFoto() {
+        return foto;
     }
 
     public Set<Interaccion> getInteraccionesHechas() {
