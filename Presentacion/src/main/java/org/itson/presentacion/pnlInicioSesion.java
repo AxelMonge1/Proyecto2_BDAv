@@ -1,135 +1,182 @@
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package org.itson.presentacion;
 
-import com.mycompany.negocios.EstudianteService;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Image;
+import java.awt.Insets;
+import java.awt.event.ActionListener;
+import java.net.URL;
 import java.util.List;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
+import javax.swing.border.Border;
+import javax.swing.border.CompoundBorder;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
 import models.Estudiante;
-import org.itson.persistencia.EstudianteDAO;
-import org.itson.persistencia.IEstudianteDAO;
 import org.itson.utilidades.JPAUtil;
 import org.itson.utilidades.RegexUtil;
-
+import org.itson.persistencia.IEstudianteDAO;
+import org.itson.persistencia.EstudianteDAO;
 
 /**
  *
- * @author EdgarUris
+ * @author HP
  */
-public class pnlInicioSesion extends javax.swing.JPanel {
-    private RegexUtil regex;
-    private IEstudianteDAO estDAO;
-    private EstudianteService estService;
+public class pnlInicioSesion extends JPanel {
+
+    private final Color COLOR_GRIS_CABECERA = new Color(235, 235, 235); //Gris claro de cabecera
+    private final Color COLOR_LILA_FONDO = new Color(240, 240, 250);   //Lila muy pálido de fondo
+    private final Color COLOR_MORADO_ACENTO = new Color(111, 63, 140); //Morado para bordes y texto de botones
+
+    private final Font FUENTE_TITULO = new Font("Segoe UI", Font.BOLD, 22);
+    private final Font FUENTE_LABELS = new Font("Segoe UI", Font.BOLD, 14);
+    private final Font FUENTE_CAMPOS = new Font("Segoe UI", Font.PLAIN, 14);
+    private final Font FUENTE_BOTONES = new Font("Segoe UI", Font.BOLD, 16);
+    private final Font FUENTE_PREGUNTA = new Font("Segoe UI", Font.BOLD, 13);
+
+    private JTextField txtCorreo;
+    private JPasswordField pswContra;
+    private JButton btnIniciarSesion;
+    private JButton btnCrearCuenta;
     
-    /**
-     * Creates new form pnlInicioSesion
-     */
+    private RegexUtil regex = new RegexUtil();
+    private IEstudianteDAO estDAO = new EstudianteDAO();
+
     public pnlInicioSesion() {
-        initComponents();
-        this.regex = new RegexUtil();
-        this.estDAO = new EstudianteDAO();
-        this.estService = new EstudianteService();
+        setLayout(new BorderLayout());
+        setSize(400,650);
+
+        //cabecera
+        JPanel panelCabecera = new JPanel();
+        panelCabecera.setLayout(new BoxLayout(panelCabecera, BoxLayout.Y_AXIS));
+        panelCabecera.setBackground(COLOR_GRIS_CABECERA);
+        panelCabecera.setBorder(new EmptyBorder(30, 0, 10, 0));
+
+        //nuestro logo
+        JLabel lblLogo = new JLabel();
+        try {
+            URL logoUrl = getClass().getResource("/logoUK.png");
+            if (logoUrl != null) {
+                ImageIcon iconoOriginal = new ImageIcon(logoUrl);
+                Image imagenEscalada = iconoOriginal.getImage().getScaledInstance(150, 150, Image.SCALE_SMOOTH);
+                lblLogo.setIcon(new ImageIcon(imagenEscalada));
+            } else {
+                System.out.println("Error: No se pudo encontrar el logo. Asegúrate de que la ruta sea correcta.");
+            }
+        } catch (Exception e) {
+            System.out.println("Error al cargar el logo: " + e.getMessage());
+        }
+        lblLogo.setAlignmentX(Component.CENTER_ALIGNMENT);
+        panelCabecera.add(lblLogo);
+
+        
+        panelCabecera.add(Box.createRigidArea(new Dimension(0, 20)));
+
+        JLabel lblTituloPrincipal = new JLabel("Inicio de sesion");
+        lblTituloPrincipal.setFont(FUENTE_TITULO);
+        lblTituloPrincipal.setAlignmentX(Component.CENTER_ALIGNMENT);
+        lblTituloPrincipal.setForeground(Color.BLACK);
+        panelCabecera.add(lblTituloPrincipal);
+
+        add(panelCabecera, BorderLayout.NORTH);
+
+        JPanel panelCuerpo = new JPanel();
+        panelCuerpo.setLayout(new GridBagLayout());
+        panelCuerpo.setBackground(COLOR_LILA_FONDO);
+        panelCuerpo.setBorder(new EmptyBorder(20, 20, 20, 20));
+
+        JPanel panelFormulario = new JPanel(new GridBagLayout());
+        panelFormulario.setBackground(COLOR_LILA_FONDO);
+
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(5, 5, 5, 5);
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+
+        JLabel lblCorreo = new JLabel("Correo institucional:");
+        lblCorreo.setFont(FUENTE_LABELS);
+        gbc.gridx = 0; gbc.gridy = 0; gbc.anchor = GridBagConstraints.WEST;
+        panelFormulario.add(lblCorreo, gbc);
+
+        txtCorreo = new JTextField(30);
+        txtCorreo.setFont(FUENTE_CAMPOS);
+        txtCorreo.setBorder(new LineBorder(Color.GRAY, 1));
+        gbc.gridx = 0; gbc.gridy = 1; gbc.weightx = 1.0;
+        panelFormulario.add(txtCorreo, gbc);
+
+        gbc.gridy = 2;
+        panelFormulario.add(Box.createRigidArea(new Dimension(0, 15)), gbc);
+
+        JLabel lblContrasena = new JLabel("Contraseña:");
+        lblContrasena.setFont(FUENTE_LABELS);
+        gbc.gridx = 0; gbc.gridy = 3; gbc.anchor = GridBagConstraints.WEST;
+        panelFormulario.add(lblContrasena, gbc);
+
+        JPanel panelPasswordRow = new JPanel(new BorderLayout(5, 0));
+        panelPasswordRow.setBackground(COLOR_LILA_FONDO);
+
+        pswContra = new JPasswordField();
+        pswContra.setFont(FUENTE_CAMPOS);
+        pswContra.setBorder(new LineBorder(Color.GRAY, 1));
+        panelPasswordRow.add(pswContra, BorderLayout.CENTER);
+
+        JButton btnOjo = new JButton();
+        btnOjo.setPreferredSize(new Dimension(30, 30));
+        btnOjo.setBackground(Color.WHITE);
+        btnOjo.setBorder(new LineBorder(COLOR_MORADO_ACENTO, 1));
+
+        gbc.gridx = 0; gbc.gridy = 4; gbc.weightx = 1.0;
+        panelFormulario.add(panelPasswordRow, gbc);
+
+        gbc.gridy = 5;
+        panelFormulario.add(Box.createRigidArea(new Dimension(0, 25)), gbc);
+
+        btnIniciarSesion = new JButton("Iniciar sesión");
+        darEstiloBoton(btnIniciarSesion);
+        gbc.gridx = 0; gbc.gridy = 6; gbc.fill = GridBagConstraints.NONE; gbc.anchor = GridBagConstraints.CENTER;
+        panelFormulario.add(btnIniciarSesion, gbc);
+        btnIniciarSesion.addActionListener(e -> iniciarSesion());
+
+        gbc.gridy = 7;
+        panelFormulario.add(Box.createRigidArea(new Dimension(0, 50)), gbc);
+
+        JLabel lblPregunta = new JLabel("¿No tienes una cuenta todavia?");
+        lblPregunta.setFont(FUENTE_PREGUNTA);
+        lblPregunta.setHorizontalAlignment(SwingConstants.CENTER);
+        gbc.gridx = 0; gbc.gridy = 8; gbc.fill = GridBagConstraints.HORIZONTAL; gbc.anchor = GridBagConstraints.CENTER;
+        panelFormulario.add(lblPregunta, gbc);
+
+        btnCrearCuenta = new JButton("Crear cuenta");
+        darEstiloBoton(btnCrearCuenta);
+        btnCrearCuenta.setFont(new Font("Segoe UI", Font.BOLD, 14));
+        gbc.gridx = 0; gbc.gridy = 9; gbc.fill = GridBagConstraints.NONE; gbc.anchor = GridBagConstraints.CENTER;
+        panelFormulario.add(btnCrearCuenta, gbc);
+        btnCrearCuenta.addActionListener(e -> crearCuenta());
+        
+        panelCuerpo.add(panelFormulario);
+
+        add(panelCuerpo, BorderLayout.CENTER);
     }
-
-    /**
-     * This method is called from within the constructor to initialize the form.
-     * WARNING: Do NOT modify this code. The content of this method is always
-     * regenerated by the Form Editor.
-     */
-    @SuppressWarnings("unchecked")
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents() {
-
-        lblBienvenido = new javax.swing.JLabel();
-        txtCorreo = new javax.swing.JTextField();
-        pswContra = new javax.swing.JPasswordField();
-        lblUser = new javax.swing.JLabel();
-        lblContra = new javax.swing.JLabel();
-        btnCrearCuenta = new javax.swing.JButton();
-        lblNoCuenta = new javax.swing.JLabel();
-        btnIniciarSesion = new javax.swing.JButton();
-        btnVerPass = new javax.swing.JToggleButton();
-
-        lblBienvenido.setText("Inicio de sesion");
-
-        txtCorreo.setColumns(15);
-
-        pswContra.setColumns(15);
-
-        lblUser.setText("Correo institucional:");
-
-        lblContra.setText("Contraseña:");
-
-        btnCrearCuenta.setText("Crear cuenta");
-        btnCrearCuenta.setBorder(null);
-        btnCrearCuenta.addActionListener(this::btnCrearCuentaActionPerformed);
-
-        lblNoCuenta.setText("¿No tienes una cuenta todavia?");
-
-        btnIniciarSesion.setText("Iniciar sesión");
-        btnIniciarSesion.addActionListener(this::btnIniciarSesionActionPerformed);
-
-        btnVerPass.setText("o_o");
-        btnVerPass.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        btnVerPass.addActionListener(this::btnVerPassActionPerformed);
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(217, 217, 217)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(lblContra, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblNoCuenta, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(txtCorreo)
-                            .addComponent(pswContra)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(lblUser, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                    .addGap(43, 43, 43)
-                                    .addComponent(lblBienvenido))))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnVerPass))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(245, 245, 245)
-                        .addComponent(btnIniciarSesion))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(259, 259, 259)
-                        .addComponent(btnCrearCuenta, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(188, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(lblBienvenido, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(34, 34, 34)
-                .addComponent(lblUser)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(lblContra)
-                .addGap(4, 4, 4)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(pswContra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnVerPass, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(btnIniciarSesion)
-                .addGap(61, 61, 61)
-                .addComponent(lblNoCuenta)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnCrearCuenta, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(71, Short.MAX_VALUE))
-        );
-    }// </editor-fold>//GEN-END:initComponents
-
-    private void btnIniciarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIniciarSesionActionPerformed
+    
+    private void iniciarSesion(){
         String correo = txtCorreo.getText().trim();
         char[] contraChar = pswContra.getPassword();
         String contra = "";        
@@ -160,39 +207,22 @@ public class pnlInicioSesion extends javax.swing.JPanel {
         ventana.setVisible(true);
         frmInicio padre = (frmInicio) SwingUtilities.getWindowAncestor(this);
         padre.dispose();
-    }//GEN-LAST:event_btnIniciarSesionActionPerformed
-
-    private void btnVerPassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerPassActionPerformed
-        if(btnVerPass.isSelected()){
-            pswContra.setEchoChar((char)0);
-            btnVerPass.setText("-_-");
-        }
-        else{
-            pswContra.setEchoChar('*');
-            btnVerPass.setText("o_o");
-        }
-    }//GEN-LAST:event_btnVerPassActionPerformed
-
-    private void btnCrearCuentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearCuentaActionPerformed
+    }
+    
+    private void crearCuenta(){
         frmInicio padre = (frmInicio) SwingUtilities.getWindowAncestor(this);
         padre.pasarACrearCuenta();
-        /*
-        frmCrearCuenta registro = new frmCrearCuenta();
-        registro.setVisible(true);
-        */
-    }//GEN-LAST:event_btnCrearCuentaActionPerformed
+    }
 
-    
+    private void darEstiloBoton(JButton boton) {
+        boton.setFont(FUENTE_BOTONES);
+        boton.setForeground(Color.BLACK); // Texto negro como en la imagen decorada
+        boton.setBackground(Color.WHITE); // Fondo blanco
+        boton.setFocusPainted(false); 
 
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnCrearCuenta;
-    private javax.swing.JButton btnIniciarSesion;
-    private javax.swing.JToggleButton btnVerPass;
-    private javax.swing.JLabel lblBienvenido;
-    private javax.swing.JLabel lblContra;
-    private javax.swing.JLabel lblNoCuenta;
-    private javax.swing.JLabel lblUser;
-    private javax.swing.JPasswordField pswContra;
-    private javax.swing.JTextField txtCorreo;
-    // End of variables declaration//GEN-END:variables
+        Border bordeLinea = new LineBorder(COLOR_MORADO_ACENTO, 2);
+        Border bordePadding = new EmptyBorder(10, 20, 10, 20);
+        boton.setBorder(new CompoundBorder(bordeLinea, bordePadding));
+    }
 }
+

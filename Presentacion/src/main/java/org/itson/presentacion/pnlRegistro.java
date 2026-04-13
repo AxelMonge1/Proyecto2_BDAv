@@ -74,6 +74,7 @@ public class pnlRegistro extends javax.swing.JPanel {
         labelPerfil = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         FotoDePerfil = new javax.swing.JLabel();
+        btnVolver = new javax.swing.JButton();
 
         jLabel2.setText("jLabel2");
 
@@ -129,7 +130,11 @@ public class pnlRegistro extends javax.swing.JPanel {
 
         labelPerfil.setText("Foto de perfil:");
 
+        FotoDePerfil.setFont(new java.awt.Font("Segoe UI", 0, 8)); // NOI18N
         FotoDePerfil.setText("Aqui aparecera su foto de perfil");
+
+        btnVolver.setText("Volver");
+        btnVolver.addActionListener(this::btnVolverActionPerformed);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -192,7 +197,8 @@ public class pnlRegistro extends javax.swing.JPanel {
                                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                                     .addComponent(txtSemestre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                     .addComponent(lblSemestre, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(btnVolver))
                                         .addGap(75, 75, 75)
                                         .addComponent(FotoDePerfil, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addGap(122, 122, 122)))
@@ -260,7 +266,9 @@ public class pnlRegistro extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtSemestre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(txtSemestre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnVolver))
                     .addComponent(FotoDePerfil, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(15, 26, Short.MAX_VALUE))
         );
@@ -423,6 +431,11 @@ public class pnlRegistro extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_btnFotoPerfilActionPerformed
 
+    private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
+        frmInicio padre = (frmInicio) SwingUtilities.getWindowAncestor(this);
+        padre.volverAInicioSesion();
+    }//GEN-LAST:event_btnVolverActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel FotoDePerfil;
@@ -430,6 +443,7 @@ public class pnlRegistro extends javax.swing.JPanel {
     private javax.swing.JButton btnSiguiente;
     private javax.swing.JToggleButton btnVerContra;
     private javax.swing.JToggleButton btnVerContra2;
+    private javax.swing.JButton btnVolver;
     private javax.swing.JComboBox<String> cbxCarreras;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

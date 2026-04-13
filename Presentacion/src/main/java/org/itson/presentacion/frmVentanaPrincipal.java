@@ -4,6 +4,8 @@
  */
 package org.itson.presentacion;
 
+import com.mycompany.negocios.EstudianteService;
+import com.mycompany.negocios.IEstudianteService;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
@@ -32,8 +34,10 @@ public class frmVentanaPrincipal extends JFrame{
     Estudiante est;
     JPanel panelBotones = new JPanel(new GridLayout(0, 1, 15, 15));
     JLabel logoLabel = new JLabel();
+    IEstudianteService estudianteService;
     
     public frmVentanaPrincipal(Estudiante estEnSesion){
+        estudianteService = new EstudianteService();
         this.est = estEnSesion;
         setTitle("UniLink");
         setSize(800, 600);
@@ -118,7 +122,7 @@ public class frmVentanaPrincipal extends JFrame{
     
     //cosas para movernos entre paneles
     private void abrirMenuExploracion() throws IOException{
-        pnlExplorar explorar = new pnlExplorar(est);
+        pnlExplorar explorar = new pnlExplorar(estudianteService.listar());
         minimizarLogo();
         panelBotones.removeAll();
         panelBotones.add(explorar);
@@ -163,5 +167,51 @@ public class frmVentanaPrincipal extends JFrame{
     //obtener el estudiante en sesion
     public Estudiante getEstudianteEnSesion(){
         return est;
+    }
+    
+    protected void volverAInicio(){
+        cargarPanelBotones();
+    }
+    
+    private void cargarPanelBotones(){
+        Font fuenteBoton = new Font("Segoe UI", Font.BOLD, 16);
+        //botones
+        JButton btnExplorar = crearBoton("Explorar", fuenteBoton);
+        JButton btnMiPerfil = crearBoton("Mi perfil", fuenteBoton);
+        JButton btnMisMatches = crearBoton("Mis Matches", fuenteBoton);
+        JButton btnSalir = crearBoton("Salir", fuenteBoton);
+
+        
+        //eventos de botones
+        btnExplorar.addActionListener(e -> {
+            try {
+                abrirMenuExploracion();
+            } catch (IOException ex) {
+                Logger.getLogger(frmVentanaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        });
+        btnMiPerfil.addActionListener(e -> {
+            try {
+                abrirMiPerfil();
+            } catch (IOException ex) {
+                Logger.getLogger(frmVentanaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        });
+        btnMisMatches.addActionListener(e -> {
+            try {
+                abrirMatches();
+            } catch (IOException ex) {
+                Logger.getLogger(frmVentanaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        });
+        btnSalir.addActionListener(e -> salirDelSistema());
+        
+        //poner botones en panel
+        panelBotones.add(btnMiPerfil);
+        panelBotones.add(btnExplorar);
+        panelBotones.add(btnMisMatches);
+        panelBotones.add(btnSalir);
+        add(panelBotones, BorderLayout.CENTER);
+        setVisible(true);   
     }
 }

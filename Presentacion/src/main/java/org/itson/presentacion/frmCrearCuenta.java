@@ -62,7 +62,7 @@ public class frmCrearCuenta extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 65, Short.MAX_VALUE)
+                .addGap(0, 100, Short.MAX_VALUE)
                 .addComponent(elPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -71,6 +71,7 @@ public class frmCrearCuenta extends javax.swing.JFrame {
 
     protected void pasarAIntereses(Estudiante est){
         this.estudianteRegistro = est;
+        setLocationRelativeTo(null);
         pnlIntereses p2 = new pnlIntereses(estudianteRegistro);
         p2.setSize(elPanel.getWidth(), elPanel.getWidth());
         elPanel.removeAll();

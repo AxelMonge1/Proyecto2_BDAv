@@ -20,15 +20,23 @@ public class frmInicio extends javax.swing.JFrame {
         pnlInicioSesion i = new pnlInicioSesion();
         i.setSize(elPanel.getWidth(), elPanel.getWidth());
         elPanel.removeAll();
+        elPanel.setSize(400,650);
         elPanel.add(i);
         elPanel.revalidate();
         elPanel.repaint();
         setTitle("Inicio de sesión");
+        setLocationRelativeTo(null);
     }
     
     protected void pasarACrearCuenta(){
         frmCrearCuenta registro = new frmCrearCuenta();
         registro.setVisible(true);
+        this.dispose();
+    }
+    
+    protected void volverAInicioSesion(){
+        frmInicio inicio = new frmInicio();
+        inicio.setVisible(true);
         this.dispose();
     }
 
@@ -53,7 +61,7 @@ public class frmInicio extends javax.swing.JFrame {
         );
         elPanelLayout.setVerticalGroup(
             elPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGap(0, 650, Short.MAX_VALUE)
         );
 
         getContentPane().add(elPanel, java.awt.BorderLayout.CENTER);
