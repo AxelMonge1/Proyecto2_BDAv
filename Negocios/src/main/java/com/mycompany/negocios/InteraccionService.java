@@ -7,16 +7,18 @@ package com.mycompany.negocios;
 import jakarta.persistence.EntityManager;
 import java.util.List;
 import models.Interaccion;
+import models.Match;
+import models.TipoInteraccion;
 import org.itson.persistencia.InteraccionDAO;
-import org.itson.persistencia.iInteraccionDAO;
 import org.itson.utilidades.JPAUtil;
 
 /**
  *
  * @author axelm
  */
-public class InteraccionService implements iInteraccionService{
-    private iInteraccionDAO interaccionDAO;
+public class InteraccionService implements iInteraccionService {
+
+    private InteraccionDAO interaccionDAO;
 
     public InteraccionService() {
         this.interaccionDAO = new InteraccionDAO();
@@ -88,6 +90,51 @@ public class InteraccionService implements iInteraccionService{
         EntityManager em = JPAUtil.getEntityManager();
         try {
             return interaccionDAO.listar(em);
+        } finally {
+            em.close();
+        }
+    }
+
+    
+    public void guardarConMatch(Interaccion interaccion) {
+        EntityManager em = JPAUtil.getEntityManager();
+        MatchService matchService = new MatchService();
+
+        try {
+            em.getTransaction().begin();
+
+            
+            interaccionDAO.agregar(interaccion, em);
+
+            Long idOrigen = interaccion.getEstudianteOrigen().getId();
+            Long idDestino = interaccion.getEstudianteDestino().getId();
+
+            
+            Interaccion inversa = interaccionDAO.buscarInteraccion(
+                idDestino, idOrigen, em
+            );
+
+           
+            if (interaccion.getTipoInteraccion() == TipoInteraccion.LIKE && inversa != null) {
+
+                boolean existeMatch = matchService.existeMatch(idOrigen, idDestino);
+
+                if (!existeMatch) {
+                    Match match = new Match();
+                    match.setEstudiante1(interaccion.getEstudianteOrigen());
+                    match.setEstudiante2(interaccion.getEstudianteDestino());
+
+                    em.persist(match);
+                }
+            }
+
+            em.getTransaction().commit();
+
+        } catch (Exception ex) {
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+            throw ex;
         } finally {
             em.close();
         }
