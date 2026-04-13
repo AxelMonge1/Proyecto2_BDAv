@@ -10,9 +10,6 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.io.IOException;
-import java.net.URL;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.BorderFactory;
@@ -23,7 +20,6 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
-import javax.swing.SwingUtilities;
 import models.Estudiante;
 
 /**
@@ -34,40 +30,41 @@ import models.Estudiante;
 public class frmVentanaPrincipal extends JFrame{
     
     Estudiante est;
+    JPanel panelBotones = new JPanel(new GridLayout(0, 1, 15, 15));
+    JLabel logoLabel = new JLabel();
     
     public frmVentanaPrincipal(Estudiante estEnSesion){
         this.est = estEnSesion;
         setTitle("UniLink");
-        setSize(500, 600);
+        setSize(800, 600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setLayout(new BorderLayout());
         
         //logo central
-        System.out.println(getClass().getResource("/logoUK.png"));
         ImageIcon icono = new ImageIcon(getClass().getResource("/logoUK.png"));
         Image imagenOriginal = icono.getImage();
         Image imagenEscalada = imagenOriginal.getScaledInstance(250, 250, Image.SCALE_SMOOTH);
         ImageIcon iconoEscalado = new ImageIcon(imagenEscalada);
-        JLabel logoLabel = new JLabel(iconoEscalado);
+        logoLabel.setIcon(iconoEscalado);
         logoLabel.setHorizontalAlignment(JLabel.CENTER);
         logoLabel.setBorder(BorderFactory.createEmptyBorder(20, 0, 10, 0));
         add(logoLabel, BorderLayout.NORTH);
         
         //panel para botones
-        JPanel panelBotones = new JPanel(new GridLayout(0, 1, 15, 15));
+
         panelBotones.setBorder(BorderFactory.createEmptyBorder(20, 40, 20, 40));
         panelBotones.setBackground(new Color(245, 240, 255));
         Font fuenteBoton = new Font("Segoe UI", Font.BOLD, 16);
         
-        //Botones al estilo de mi logo
+        //botones
         JButton btnExplorar = crearBoton("Explorar", fuenteBoton);
         JButton btnMiPerfil = crearBoton("Mi perfil", fuenteBoton);
         JButton btnMisMatches = crearBoton("Mis Matches", fuenteBoton);
         JButton btnSalir = crearBoton("Salir", fuenteBoton);
 
         
-        //Acciones
+        //eventos de botones
         btnExplorar.addActionListener(e -> {
             try {
                 abrirMenuExploracion();
@@ -91,24 +88,22 @@ public class frmVentanaPrincipal extends JFrame{
         });
         btnSalir.addActionListener(e -> salirDelSistema());
         
-        //Agregar botones al panel
+        //poner botones en panel
         panelBotones.add(btnMiPerfil);
         panelBotones.add(btnExplorar);
         panelBotones.add(btnMisMatches);
         panelBotones.add(btnSalir);
         add(panelBotones, BorderLayout.CENTER);
-        setVisible(true);
-        
-        
+        setVisible(true);   
     }
     private void salirDelSistema(){
-        int confir = JOptionPane.showConfirmDialog(this, "¿Está seguro de que desea realizar esta acción?", "Confirmar salida",
+        int confir = JOptionPane.showConfirmDialog(this, "¿Está seguro de que desea salir? Su sesión se cerrará", "Confirmar salida",
             JOptionPane.YES_OPTION);
         if (confir == JOptionPane.YES_OPTION){
             System.exit(0);
         }
     }
-    //Metodo para crear crear los botones con estilo
+    //crear botones con bordes morados
     private JButton crearBoton(String texto, Font fuente){
         JButton boton = new JButton(texto);
         boton.setFont(fuente);
@@ -121,21 +116,51 @@ public class frmVentanaPrincipal extends JFrame{
         return boton;
     }
     
-    //Metodos de navegacion
+    //cosas para movernos entre paneles
     private void abrirMenuExploracion() throws IOException{
-//        PacientesV ventanaPacientes = new PacientesV();
-//        ventanaPacientes.setVisible(true);
+        pnlExplorar explorar = new pnlExplorar(est);
+        minimizarLogo();
+        panelBotones.removeAll();
+        panelBotones.add(explorar);
+        panelBotones.revalidate();
+        panelBotones.repaint();
     }
     private void abrirMiPerfil() throws IOException{
-//        MedicosV ventanaMedicos = new MedicosV();
-//        ventanaMedicos.setVisible(true);
+        pnlPerfilEstudiante perfil = new pnlPerfilEstudiante(est);
+        minimizarLogo();
+        panelBotones.removeAll();
+        panelBotones.add(perfil);
+        panelBotones.revalidate();
+        panelBotones.repaint();
     }
     private void abrirMatches() throws IOException{
-//        EspecialidadV ventanaEsp = new EspecialidadV();
-//        ventanaEsp.setVisible(true);
+        pnlMatches matches = new pnlMatches();
+        minimizarLogo();
+        panelBotones.removeAll();
+        panelBotones.add(matches);
+        panelBotones.revalidate();
+        panelBotones.repaint();
+    }
+    
+    public void minimizarLogo(){
+        ImageIcon icono = new ImageIcon(getClass().getResource("/logoUK.png"));
+        Image imagenOriginal = icono.getImage();
+        Image imagenEscalada = imagenOriginal.getScaledInstance(100, 100, Image.SCALE_SMOOTH);
+        ImageIcon iconoEscalado = new ImageIcon(imagenEscalada);
+        logoLabel.setIcon(iconoEscalado);
+        logoLabel.setHorizontalAlignment(JLabel.CENTER);
+        logoLabel.setBorder(BorderFactory.createEmptyBorder(20, 0, 10, 0));
+        add(logoLabel, BorderLayout.NORTH);
+        revalidate();
+        repaint();
     }
    
+    //hacerlo visible
     public void ver() throws IOException{
         new frmVentanaPrincipal(est).setVisible(true);
+    }
+    //obtener el estudiante en sesion
+    public Estudiante getEstudianteEnSesion(){
+        return est;
     }
 }

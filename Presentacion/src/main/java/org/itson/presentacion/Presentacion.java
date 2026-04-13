@@ -15,12 +15,14 @@ import models.Estudiante;
 public class Presentacion {
 
     public static void main(String[] args) {
-        AficionService aficionServi = new AficionService();
-        aficionServi.inicializarAficiones();
+//        AficionService aficionServi = new AficionService();
+//        aficionServi.inicializarAficiones();
         
 //        frmInicio inicio = new frmInicio();
 //        inicio.setVisible(true);
 
+
+//esto es para probar
     frmVentanaPrincipal principal = new frmVentanaPrincipal(new Estudiante());
         try {
             principal.ver();

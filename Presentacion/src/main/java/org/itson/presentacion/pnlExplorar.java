@@ -22,10 +22,10 @@ import models.Estudiante;
  * 
  */
 public class pnlExplorar extends JPanel {
-    Estudiante est;
+    
     private JLabel lblFoto;
     private JLabel lblNombre;
-    private JLabel lblEdad;
+    private JLabel lblCarrera;
     private JLabel lblDescripcion;
     private JButton btnLike, btnDislike, btnSalir;
     
@@ -33,24 +33,25 @@ public class pnlExplorar extends JPanel {
         setLayout(new BorderLayout(10, 10));
         setBackground(new Color(245, 240, 255));
         setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+        setSize(400,400);
         
         //Foto perfil
-        ImageIcon icono = new ImageIcon(getClass().getResource("/logoUK.png"));
-        Image imagenOriginal = icono.getImage();
-        Image imagenEscalada = imagenOriginal.getScaledInstance(250, 250, Image.SCALE_SMOOTH);
-        ImageIcon iconoEscalado = new ImageIcon(imagenEscalada);
-        lblFoto.setHorizontalAlignment(JLabel.CENTER);
-        lblFoto.setBorder(BorderFactory.createEmptyBorder(10, 0, 20, 0));
-        add(lblFoto, BorderLayout.NORTH);
+//        ImageIcon icono = new ImageIcon(getClass().getResource("/logoUK.png"));
+//        Image imagenOriginal = icono.getImage();
+//        Image imagenEscalada = imagenOriginal.getScaledInstance(250, 250, Image.SCALE_SMOOTH);
+//        ImageIcon iconoEscalado = new ImageIcon(imagenEscalada);
+//        lblFoto.setHorizontalAlignment(JLabel.CENTER);
+//        lblFoto.setBorder(BorderFactory.createEmptyBorder(10, 0, 20, 0));
+//        add(lblFoto, BorderLayout.NORTH);
         
         
         JPanel panelInfo = new JPanel(new GridLayout(0, 1, 5, 5));
         panelInfo.setBackground(new Color(245, 240, 255));
-        lblNombre = new JLabel("Nombre: " );
-        lblEdad = new JLabel("Edad: " );
-        lblDescripcion = new JLabel("Descripcion: " );
+        lblNombre = new JLabel("Nombre: ");
+        lblCarrera = new JLabel("Carrera: ");
+        lblDescripcion = new JLabel("Descripcion: ");
         panelInfo.add(lblNombre);
-        panelInfo.add(lblEdad);
+        panelInfo.add(lblCarrera);
         panelInfo.add(lblDescripcion);
         add(panelInfo, BorderLayout.CENTER);
         
@@ -59,10 +60,13 @@ public class pnlExplorar extends JPanel {
         panelBotones.setBackground(new Color(245, 240, 255));
         Font fuenteBoton = new Font("Segoe UI", Font.BOLD, 16);
         
-        //Botones al estilo de mi logo
-        JButton btnLike = crearBoton("Explorar", fuenteBoton);
-        JButton btnDislike = crearBoton("Mi perfil", fuenteBoton);
+        JButton btnLike = crearBoton("Me interesa", fuenteBoton);
+        JButton btnDislike = crearBoton("No me interesa", fuenteBoton);
         JButton btnSalir = crearBoton("Salir", fuenteBoton);
+        
+        panelBotones.add(btnLike);
+        panelBotones.add(btnDislike);
+        panelBotones.add(btnSalir);
                 
        }
     private JButton crearBoton(String texto, Font fuente){
@@ -75,5 +79,5 @@ public class pnlExplorar extends JPanel {
         boton.setHorizontalAlignment(SwingConstants.CENTER);
         boton.setIconTextGap(15);
         return boton;
-    } 
+    }
 }
