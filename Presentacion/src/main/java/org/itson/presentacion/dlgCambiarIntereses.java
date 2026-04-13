@@ -19,15 +19,20 @@ import org.itson.utilidades.JPAUtil;
  * @author axelm
  */
 public class dlgCambiarIntereses extends javax.swing.JDialog {
-    
+    private boolean crearCuenta;
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(dlgCambiarIntereses.class.getName());
 
     /**
      * Creates new form dlgCambiarIntereses
      */
-    public dlgCambiarIntereses(java.awt.Frame parent, boolean modal) {
+    public dlgCambiarIntereses(java.awt.Frame parent, boolean modal, boolean crearCuenta) {
         super(parent, modal);
+        this.crearCuenta = crearCuenta;
         initComponents();
+        if(!crearCuenta){
+            lblHobbies.setText("Seleccione el/los hobbies para filtrar");
+            lblIntereses.setText("Seleccionel el/los intereses para filtrar");
+        }
     }
 
     /**
@@ -39,7 +44,7 @@ public class dlgCambiarIntereses extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
+        lblHobbies = new javax.swing.JLabel();
         Arte = new javax.swing.JCheckBox();
         Fotografia = new javax.swing.JCheckBox();
         Musica = new javax.swing.JCheckBox();
@@ -48,7 +53,7 @@ public class dlgCambiarIntereses extends javax.swing.JDialog {
         Coleccionismo = new javax.swing.JCheckBox();
         Jardineria = new javax.swing.JCheckBox();
         Lectura = new javax.swing.JCheckBox();
-        jLabel2 = new javax.swing.JLabel();
+        lblIntereses = new javax.swing.JLabel();
         Deportes = new javax.swing.JCheckBox();
         Programacion = new javax.swing.JCheckBox();
         Robotica = new javax.swing.JCheckBox();
@@ -57,11 +62,11 @@ public class dlgCambiarIntereses extends javax.swing.JDialog {
         Moda = new javax.swing.JCheckBox();
         Turismo = new javax.swing.JCheckBox();
         Gastronomia = new javax.swing.JCheckBox();
-        btnCancelar = new javax.swing.JButton();
+        btnConfirmar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jLabel1.setText("Selecciona tus hobbies (minimo 2):");
+        lblHobbies.setText("Selecciona tus hobbies (minimo 2):");
 
         Arte.setText("Arte");
 
@@ -79,7 +84,7 @@ public class dlgCambiarIntereses extends javax.swing.JDialog {
 
         Lectura.setText("Lectura");
 
-        jLabel2.setText("Selecciona temas de tu interes (minimo 2):");
+        lblIntereses.setText("Selecciona temas de tu interes (minimo 2):");
 
         Deportes.setText("Deportes");
 
@@ -97,8 +102,8 @@ public class dlgCambiarIntereses extends javax.swing.JDialog {
 
         Gastronomia.setText("Gastronomia");
 
-        btnCancelar.setText("Cancelar");
-        btnCancelar.addActionListener(this::btnCancelarActionPerformed);
+        btnConfirmar.setText("Confirmar");
+        btnConfirmar.addActionListener(this::btnConfirmarActionPerformed);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -128,13 +133,13 @@ public class dlgCambiarIntereses extends javax.swing.JDialog {
                 .addGap(117, 117, 117))
             .addGroup(layout.createSequentialGroup()
                 .addGap(49, 49, 49)
-                .addComponent(jLabel1)
+                .addComponent(lblHobbies)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 86, Short.MAX_VALUE)
-                .addComponent(jLabel2)
+                .addComponent(lblIntereses)
                 .addGap(55, 55, 55))
             .addGroup(layout.createSequentialGroup()
                 .addGap(243, 243, 243)
-                .addComponent(btnCancelar)
+                .addComponent(btnConfirmar)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -142,8 +147,8 @@ public class dlgCambiarIntereses extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addGap(49, 49, 49)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel2))
+                    .addComponent(lblHobbies)
+                    .addComponent(lblIntereses))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(Arte)
@@ -177,16 +182,16 @@ public class dlgCambiarIntereses extends javax.swing.JDialog {
                     .addComponent(Lectura)
                     .addComponent(Gastronomia))
                 .addGap(42, 42, 42)
-                .addComponent(btnCancelar)
+                .addComponent(btnConfirmar)
                 .addContainerGap(50, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+    private void btnConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmarActionPerformed
         this.dispose();
-    }//GEN-LAST:event_btnCancelarActionPerformed
+    }//GEN-LAST:event_btnConfirmarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -213,7 +218,7 @@ public class dlgCambiarIntereses extends javax.swing.JDialog {
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
-                dlgCambiarIntereses dialog = new dlgCambiarIntereses(new javax.swing.JFrame(), true);
+                dlgCambiarIntereses dialog = new dlgCambiarIntereses(new javax.swing.JFrame(), true, true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -340,8 +345,8 @@ public class dlgCambiarIntereses extends javax.swing.JDialog {
     private javax.swing.JCheckBox Robotica;
     private javax.swing.JCheckBox Turismo;
     private javax.swing.JCheckBox Videojuegos;
-    private javax.swing.JButton btnCancelar;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
+    private javax.swing.JButton btnConfirmar;
+    private javax.swing.JLabel lblHobbies;
+    private javax.swing.JLabel lblIntereses;
     // End of variables declaration//GEN-END:variables
 }

@@ -19,9 +19,9 @@ import models.TipoInteraccion;
 public class EstudianteDAO implements IEstudianteDAO {
     @Override
     public List<Estudiante> buscarPorNombre(String nombre, EntityManager em) {
-        TypedQuery<Estudiante> query = em.createQuery("SELECT e FROM Estudiante e WHERE nombre LIKE :nombre", Estudiante.class);
+        TypedQuery<Estudiante> query = em.createQuery("SELECT e FROM Estudiante e WHERE e.nombre LIKE :nombre", Estudiante.class);
         query.setParameter("nombre", "%" + nombre + "%");
-        query.setFirstResult(1);
+        query.setFirstResult(0);
         query.setMaxResults(100);
         return query.getResultList();
     }
