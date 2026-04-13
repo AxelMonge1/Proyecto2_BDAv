@@ -6,6 +6,7 @@ package org.itson.presentacion;
 
 import com.mycompany.negocios.AficionService;
 import com.mycompany.negocios.EstudianteService;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -107,12 +108,17 @@ public class pnlBuscarPersonas extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void txtNombreKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyReleased
-        tblEstudiantes.setModel(estudianteService.obtenerTablaEstudiantesPorFiltro(txtNombre.getText()));
+        String nombre = txtNombre.getText().trim();
+        if(nombre.isEmpty()){
+            cargarTabla();
+        }else{
+            tblEstudiantes.setModel(estudianteService.obtenerTablaEstudiantesPorFiltro(nombre));
+        }
     }//GEN-LAST:event_txtNombreKeyReleased
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this);
-        dlgCambiarIntereses dlg = new dlgCambiarIntereses(frame, true);
+        dlgCambiarIntereses dlg = new dlgCambiarIntereses(frame, true, false);
         dlg.setLocationRelativeTo(this);
         dlg.setVisible(true);
         filtroAficiones = dlg.obtenerAficionesSeleccionadas(false);
@@ -120,11 +126,11 @@ public class pnlBuscarPersonas extends javax.swing.JPanel {
             cargarTabla();
         }else if (filtroAficiones.size() == 1){
             Aficion[] aficionesArr = filtroAficiones.toArray(Aficion[]::new);
-            List<Estudiante> estudiantes = aficionService.estAficionesSim(aficionesArr[0].getId());
+            List<Estudiante> estudiantes = new ArrayList<>(aficionService.estAficionesSim(aficionesArr[0].getId()));
             tblEstudiantes.setModel(estudianteService.obtenerTablaConLista(estudiantes));
         }else{
             Aficion[] aficionesArr = filtroAficiones.toArray(Aficion[]::new);
-            List<Estudiante> estudiantesQueCoinciden = aficionService.estAficionesSim(aficionesArr[0].getId());
+            List<Estudiante> estudiantesQueCoinciden = new ArrayList<>(aficionService.estAficionesSim(aficionesArr[0].getId()));
             for (int i = 1; i < aficionesArr.length; i++) {
                 List<Estudiante> estSimilares = aficionService.estAficionesSim(aficionesArr[i].getId());
                 estudiantesQueCoinciden.retainAll(estSimilares);

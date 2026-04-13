@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package org.itson.presentacion;
 
 import java.awt.BorderLayout;
@@ -22,26 +18,36 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import models.Estudiante;
 
-/**
- *
- * @author EdgarUris
- * @author jeniferfl
- */
-public class frmVentanaPrincipal extends JFrame{
-    
+public class frmVentanaPrincipal extends JFrame {
+
     Estudiante est;
     JPanel panelBotones = new JPanel(new GridLayout(0, 1, 15, 15));
     JLabel logoLabel = new JLabel();
-    
-    public frmVentanaPrincipal(Estudiante estEnSesion){
+    JButton btnAtras;
+
+    public frmVentanaPrincipal(Estudiante estEnSesion) {
         this.est = estEnSesion;
         setTitle("UniLink");
-        setSize(800, 600);
+        setSize(1200, 800);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setLayout(new BorderLayout());
-        
-        //logo central
+        btnAtras = crearBoton("Atras", new Font("Segoe UI", Font.BOLD, 16));
+        btnAtras.setVisible(false);
+        btnAtras.addActionListener(e -> inicioSistema());
+        JPanel navPanel = new JPanel(new BorderLayout());
+        navPanel.setBackground(new Color(245, 240, 255));
+        navPanel.add(btnAtras, BorderLayout.WEST);
+        navPanel.add(logoLabel, BorderLayout.CENTER);
+        add(navPanel, BorderLayout.NORTH);
+        add(panelBotones, BorderLayout.CENTER);
+        inicioSistema();
+        setVisible(true);
+    }
+
+    private void inicioSistema() {
+        btnAtras.setVisible(false);
+        //Logo central
         ImageIcon icono = new ImageIcon(getClass().getResource("/logoUK.png"));
         Image imagenOriginal = icono.getImage();
         Image imagenEscalada = imagenOriginal.getScaledInstance(250, 250, Image.SCALE_SMOOTH);
@@ -49,22 +55,19 @@ public class frmVentanaPrincipal extends JFrame{
         logoLabel.setIcon(iconoEscalado);
         logoLabel.setHorizontalAlignment(JLabel.CENTER);
         logoLabel.setBorder(BorderFactory.createEmptyBorder(20, 0, 10, 0));
-        add(logoLabel, BorderLayout.NORTH);
-        
-        //panel para botones
-
+        //Panel para botones
+        panelBotones.removeAll();
+        panelBotones.setLayout(new GridLayout(0, 1, 15, 15));
         panelBotones.setBorder(BorderFactory.createEmptyBorder(20, 40, 20, 40));
         panelBotones.setBackground(new Color(245, 240, 255));
+        //Botones
         Font fuenteBoton = new Font("Segoe UI", Font.BOLD, 16);
-        
-        //botones
         JButton btnExplorar = crearBoton("Explorar", fuenteBoton);
         JButton btnMiPerfil = crearBoton("Mi perfil", fuenteBoton);
+        JButton btnBuscarGente = crearBoton("Buscar personas", fuenteBoton);
         JButton btnMisMatches = crearBoton("Mis Matches", fuenteBoton);
         JButton btnSalir = crearBoton("Salir", fuenteBoton);
-
-        
-        //eventos de botones
+        //Eventos de botones
         btnExplorar.addActionListener(e -> {
             try {
                 abrirMenuExploracion();
@@ -79,6 +82,7 @@ public class frmVentanaPrincipal extends JFrame{
                 Logger.getLogger(frmVentanaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
             }
         });
+        btnBuscarGente.addActionListener(e -> abrirBuscarPersonas());
         btnMisMatches.addActionListener(e -> {
             try {
                 abrirMatches();
@@ -87,62 +91,83 @@ public class frmVentanaPrincipal extends JFrame{
             }
         });
         btnSalir.addActionListener(e -> salirDelSistema());
-        
-        //poner botones en panel
+        //Poner botones al panel
         panelBotones.add(btnMiPerfil);
         panelBotones.add(btnExplorar);
         panelBotones.add(btnMisMatches);
+        panelBotones.add(btnBuscarGente);
         panelBotones.add(btnSalir);
-        add(panelBotones, BorderLayout.CENTER);
-        setVisible(true);   
+        panelBotones.revalidate();
+        panelBotones.repaint();
     }
-    private void salirDelSistema(){
+
+    private void salirDelSistema() {
         int confir = JOptionPane.showConfirmDialog(this, "¿Está seguro de que desea salir? Su sesión se cerrará", "Confirmar salida",
-            JOptionPane.YES_OPTION);
-        if (confir == JOptionPane.YES_OPTION){
+                JOptionPane.YES_OPTION);
+        if (confir == JOptionPane.YES_OPTION) {
             System.exit(0);
         }
     }
-    //crear botones con bordes morados
-    private JButton crearBoton(String texto, Font fuente){
+
+    private JButton crearBoton(String texto, Font fuente) {
         JButton boton = new JButton(texto);
         boton.setFont(fuente);
         boton.setFocusPainted(false);
         boton.setBackground(Color.WHITE);
-        boton.setForeground(new Color(0,0,0)); //negro
-        boton.setBorder(BorderFactory.createLineBorder(new Color(128, 0, 128), 2)); //morado
+        boton.setForeground(new Color(0, 0, 0));
+        boton.setBorder(BorderFactory.createLineBorder(new Color(128, 0, 128), 2));
         boton.setHorizontalAlignment(SwingConstants.CENTER);
         boton.setIconTextGap(15);
         return boton;
     }
-    
-    //cosas para movernos entre paneles
-    private void abrirMenuExploracion() throws IOException{
+
+    private void abrirMenuExploracion() throws IOException {
+        btnAtras.setVisible(true);
         pnlExplorar explorar = new pnlExplorar(est);
         minimizarLogo();
         panelBotones.removeAll();
-        panelBotones.add(explorar);
+        panelBotones.setLayout(new BorderLayout());
+        panelBotones.add(explorar, BorderLayout.CENTER);
         panelBotones.revalidate();
         panelBotones.repaint();
     }
+
     private void abrirMiPerfil() throws IOException{
+        btnAtras.setVisible(true);
         pnlPerfilEstudiante perfil = new pnlPerfilEstudiante(est);
         minimizarLogo();
         panelBotones.removeAll();
-        panelBotones.add(perfil);
-        panelBotones.revalidate();
-        panelBotones.repaint();
-    }
-    private void abrirMatches() throws IOException{
-        pnlMatches matches = new pnlMatches();
-        minimizarLogo();
-        panelBotones.removeAll();
-        panelBotones.add(matches);
+        panelBotones.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        panelBotones.setLayout(new BorderLayout());
+        panelBotones.add(perfil, BorderLayout.CENTER);
         panelBotones.revalidate();
         panelBotones.repaint();
     }
     
-    public void minimizarLogo(){
+    private void abrirBuscarPersonas(){
+        btnAtras.setVisible(true);
+        pnlBuscarPersonas buscar = new pnlBuscarPersonas();
+        minimizarLogo();
+        panelBotones.removeAll();
+        panelBotones.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        panelBotones.setLayout(new BorderLayout());
+        panelBotones.add(buscar, BorderLayout.CENTER);
+        panelBotones.revalidate();
+        panelBotones.repaint();
+    }
+
+    private void abrirMatches() throws IOException {
+        btnAtras.setVisible(true);
+        pnlMatches matches = new pnlMatches();
+        minimizarLogo();
+        panelBotones.removeAll();
+        panelBotones.setLayout(new BorderLayout());
+        panelBotones.add(matches, BorderLayout.CENTER);
+        panelBotones.revalidate();
+        panelBotones.repaint();
+    }
+
+    public void minimizarLogo() {
         ImageIcon icono = new ImageIcon(getClass().getResource("/logoUK.png"));
         Image imagenOriginal = icono.getImage();
         Image imagenEscalada = imagenOriginal.getScaledInstance(100, 100, Image.SCALE_SMOOTH);
@@ -150,18 +175,15 @@ public class frmVentanaPrincipal extends JFrame{
         logoLabel.setIcon(iconoEscalado);
         logoLabel.setHorizontalAlignment(JLabel.CENTER);
         logoLabel.setBorder(BorderFactory.createEmptyBorder(20, 0, 10, 0));
-        add(logoLabel, BorderLayout.NORTH);
         revalidate();
         repaint();
     }
-   
-    //hacerlo visible
-    public void ver() throws IOException{
+
+    public void ver() throws IOException {
         new frmVentanaPrincipal(est).setVisible(true);
     }
-    
-    //obtener el estudiante en sesion
-    public Estudiante getEstudianteEnSesion(){
+
+    public Estudiante getEstudianteEnSesion() {
         return est;
     }
 }

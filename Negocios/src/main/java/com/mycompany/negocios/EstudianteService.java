@@ -165,9 +165,19 @@ public class EstudianteService implements IEstudianteService{
     public DefaultTableModel obtenerTablaEstudiantesPorFiltro(String filtro) {
         EntityManager em = JPAUtil.getEntityManager();
         String[] columnas = {"NOMBRE", "CARRERA", "SEMESTRE"};
-        DefaultTableModel modelo = new DefaultTableModel(null, columnas);
-        List<Estudiante> lista = estudianteDAO.buscarPorNombre(filtro, em);
-        lista.forEach(e -> modelo.addRow(new Object[]{e.getNombre(), e.getCarrera(), e.getSemestre()}));
+        DefaultTableModel modelo = new DefaultTableModel(columnas, 0);
+        try {
+            List<Estudiante> lista = estudianteDAO.buscarPorNombre(filtro, em);
+            System.out.println("Tam lista: " + lista.size());
+            for (Estudiante e : lista) {
+                Object[] fila = {e.getNombre(), e.getCarrera(), e.getSemestre()};
+                modelo.addRow(fila);
+            }
+        } catch (Throwable t) {
+            System.err.println("Error al filtrar estudiantes: " + t.getMessage());
+        } finally {
+            em.close();
+        }
         return modelo;
     }
     
