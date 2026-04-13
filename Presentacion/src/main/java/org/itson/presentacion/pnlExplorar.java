@@ -42,7 +42,7 @@ public class pnlExplorar extends JPanel {
     private JButton btnLike, btnDislike, btnSalir;
     private List<Estudiante> listaEstudiantes;
     private int indiceActual = 0;
-    private iInteraccionService interaccionService;
+    private InteraccionService interaccionService;
     private frmVentanaPrincipal padre;
 
     public pnlExplorar(frmVentanaPrincipal padre, List<Estudiante> estudiantes){
@@ -179,7 +179,7 @@ public class pnlExplorar extends JPanel {
         nueva.setEstudianteOrigen(estInteractua);
         nueva.setTipoInteraccion(TipoInteraccion.LIKE);
         
-        interaccionService.guardar(nueva);
+        interaccionService.guardarConMatch(nueva);
     }
     
     private void mandarInteraccionDislike(int indice){
