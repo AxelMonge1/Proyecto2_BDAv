@@ -101,15 +101,15 @@ public class pnlIntereses extends JPanel {
         btnCrearCuenta.setForeground(new Color(128,0,128));
         btnCrearCuenta.setFocusPainted(false);
         btnCrearCuenta.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
-        btnCrearCuenta.addActionListener(e -> {
-            
-            validarIntereses();
-            validarHobbies();
-            JOptionPane.showConfirmDialog(this, "Cuenta creada con exito","Cuenta creada",JOptionPane.INFORMATION_MESSAGE);
-            estudianteService.guardar(est);
         
-            frmCrearCuenta padre = (frmCrearCuenta) SwingUtilities.getWindowAncestor(this);
-            padre.volverAInicioSesion();
+        btnCrearCuenta.addActionListener(e -> {
+            if(validarIntereses() || validarHobbies()){
+                JOptionPane.showConfirmDialog(this, "Cuenta creada con exito","Cuenta creada",JOptionPane.INFORMATION_MESSAGE);
+                estudianteService.guardar(est);
+        
+                frmCrearCuenta padre = (frmCrearCuenta) SwingUtilities.getWindowAncestor(this);
+                padre.volverAInicioSesion();
+            }
         });
 
         JPanel buttonPanel = new JPanel();
@@ -123,16 +123,16 @@ public class pnlIntereses extends JPanel {
         add(mainPanel);
     }
     
-    private void validarIntereses(){
-        int min = 1;
+    private boolean validarIntereses(){
+        int min = 0;
         for (JCheckBox jCheckBox : interesesLista) {
             if(jCheckBox.isSelected()){
-                min--;
+                min++;
             }
         }
-        if(min < 0){
+        if(min < 2){
             JOptionPane.showMessageDialog(this, "Selecciona al menos 2 intereses","Faltan intereses",JOptionPane.INFORMATION_MESSAGE);
-            return;
+            return false;
         }
         for (JCheckBox jCheckBox : interesesLista) {
             if(jCheckBox.isSelected()){
@@ -142,18 +142,19 @@ public class pnlIntereses extends JPanel {
                 estEnCreacion.getAficiones().add(in);
             }
         }
+        return true;
     }
     
-    private void validarHobbies(){
-        int min = 1;
+    private boolean validarHobbies(){
+        int min = 0;
         for (JCheckBox jCheckBox : hobbiesLista) {
             if(jCheckBox.isSelected()){
-                min--;
+                min++;
             }
         }
-        if(min < 0){
+        if(min < 2){
             JOptionPane.showMessageDialog(this, "Selecciona al menos 2 hobbies","Faltan hobbies",JOptionPane.INFORMATION_MESSAGE);
-            return;
+            return false;
         }
         for (JCheckBox jCheckBox : hobbiesLista) {
             if(jCheckBox.isSelected()){
@@ -163,6 +164,7 @@ public class pnlIntereses extends JPanel {
                 estEnCreacion.getAficiones().add(hob);
             }
         }
+        return true;
     }
 
     

@@ -4,14 +4,17 @@
  */
 package org.itson.presentacion;
 
+import com.mycompany.negocios.EstudianteService;
+import com.mycompany.negocios.IMatchService;
+import com.mycompany.negocios.MatchService;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -19,6 +22,8 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
+import models.Estudiante;
+import models.Match;
 
 /**
  *
@@ -32,9 +37,16 @@ public class pnlMatches extends JPanel {
     private JComboBox<String> cmbTipoBusqueda;
     private JButton btnRegresar;
     private JButton btnBuscar;
+    private MatchService matchService;
+    private Estudiante e;
+    private frmVentanaPrincipal padre;
+    private EstudianteService estService;
 
-    public pnlMatches() {
-        
+    public pnlMatches(frmVentanaPrincipal padre, Estudiante estEnSesion) {
+        this.e = estEnSesion;
+        this.padre = padre;
+        matchService = new MatchService();
+        estService = new EstudianteService();
         setSize(800, 500);
         setLayout(new BorderLayout(10, 10));
 
@@ -74,6 +86,8 @@ public class pnlMatches extends JPanel {
         panelConUnBoton.add(btnRegresar);
 
         add(panelConUnBoton, BorderLayout.SOUTH);
+        
+        cargarMatches();
     }
     
     private JButton crearBoton(String texto, Font fuente){
@@ -87,5 +101,12 @@ public class pnlMatches extends JPanel {
         boton.setIconTextGap(15);
         return boton;
     }
+    
+    private void cargarMatches(){
+        List<Match> matches = matchService.listarMatchesPorEstudiante(Long.valueOf(e.getId()));
+        DefaultTableModel modelo = matchService.obtenerTablaConLista(matches);
+        tablaResultados.setModel(modelo);
+    }
+    
     
 }

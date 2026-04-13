@@ -6,6 +6,8 @@ package com.mycompany.negocios;
 
 import jakarta.persistence.EntityManager;
 import java.util.List;
+import javax.swing.table.DefaultTableModel;
+import models.Estudiante;
 import models.Match;
 import org.itson.persistencia.IMatchDAO;
 import org.itson.persistencia.MatchDAO;
@@ -101,5 +103,12 @@ public class MatchService implements IMatchService{
         } finally {
             em.close();
         }
-    }    
+    }
+    
+    public DefaultTableModel obtenerTablaConLista(List<Match> matches){
+        String[] columnas = {"Nombre", "Carrera", "Semestre"};
+        DefaultTableModel modelo = new DefaultTableModel(null, columnas);
+        matches.forEach(e -> modelo.addRow(new Object[]{e.getEstudiante1().getNombre(), e.getEstudiante1().getCarrera(), e.getEstudiante1().getSemestre()}));
+        return modelo;
+    }
 }

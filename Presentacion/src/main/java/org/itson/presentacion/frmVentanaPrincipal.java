@@ -17,16 +17,21 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import models.Estudiante;
+import org.itson.persistencia.EstudianteDAO;
+import org.itson.persistencia.IEstudianteDAO;
+import org.itson.utilidades.JPAUtil;
 
 public class frmVentanaPrincipal extends JFrame {
 
-    Estudiante est;
-    JPanel panelBotones = new JPanel(new GridLayout(0, 1, 15, 15));
-    JLabel logoLabel = new JLabel();
-    JButton btnAtras;
+    private Estudiante est;
+    private JPanel panelBotones = new JPanel(new GridLayout(0, 1, 15, 15));
+    private JLabel logoLabel = new JLabel();
+    private JButton btnAtras;
+    private IEstudianteDAO estDAO;
 
     public frmVentanaPrincipal(Estudiante estEnSesion) {
         this.est = estEnSesion;
+        estDAO = new EstudianteDAO();
         setTitle("UniLink");
         setSize(1200, 800);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -90,7 +95,7 @@ public class frmVentanaPrincipal extends JFrame {
                 Logger.getLogger(frmVentanaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
             }
         });
-        btnSalir.addActionListener(e -> salirDelSistema());
+        btnSalir.addActionListener(e -> cerrarSesion());
         //Poner botones al panel
         panelBotones.add(btnMiPerfil);
         panelBotones.add(btnExplorar);
@@ -123,7 +128,7 @@ public class frmVentanaPrincipal extends JFrame {
 
     private void abrirMenuExploracion() throws IOException {
         btnAtras.setVisible(true);
-        pnlExplorar explorar = new pnlExplorar(est);
+        pnlExplorar explorar = new pnlExplorar(this, estDAO.listar(JPAUtil.getEntityManager()));
         minimizarLogo();
         panelBotones.removeAll();
         panelBotones.setLayout(new BorderLayout());
@@ -158,7 +163,7 @@ public class frmVentanaPrincipal extends JFrame {
 
     private void abrirMatches() throws IOException {
         btnAtras.setVisible(true);
-        pnlMatches matches = new pnlMatches();
+        pnlMatches matches = new pnlMatches(this, est);
         minimizarLogo();
         panelBotones.removeAll();
         panelBotones.setLayout(new BorderLayout());
@@ -185,5 +190,27 @@ public class frmVentanaPrincipal extends JFrame {
 
     public Estudiante getEstudianteEnSesion() {
         return est;
+    }
+    
+    public void volverAInicio(){
+        setLocationRelativeTo(null);
+        setLayout(new BorderLayout());
+        btnAtras = crearBoton("Atras", new Font("Segoe UI", Font.BOLD, 16));
+        btnAtras.setVisible(false);
+        btnAtras.addActionListener(e -> inicioSistema());
+        JPanel navPanel = new JPanel(new BorderLayout());
+        navPanel.setBackground(new Color(245, 240, 255));
+        navPanel.add(btnAtras, BorderLayout.WEST);
+        navPanel.add(logoLabel, BorderLayout.CENTER);
+        add(navPanel, BorderLayout.NORTH);
+        add(panelBotones, BorderLayout.CENTER);
+        inicioSistema();
+        setVisible(true);
+    }
+    
+    private void cerrarSesion(){
+        frmInicio inicio = new frmInicio();
+        inicio.setVisible(true);
+        this.dispose();
     }
 }

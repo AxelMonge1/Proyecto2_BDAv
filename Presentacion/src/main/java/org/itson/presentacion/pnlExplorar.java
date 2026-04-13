@@ -5,6 +5,8 @@
 package org.itson.presentacion;
 
 import com.mycompany.negocios.EstudianteService;
+import com.mycompany.negocios.InteraccionService;
+import com.mycompany.negocios.iInteraccionService;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
@@ -40,11 +42,20 @@ public class pnlExplorar extends JPanel {
     private JButton btnLike, btnDislike, btnSalir;
     private List<Estudiante> listaEstudiantes;
     private int indiceActual = 0;
-    private iInteraccionDAO interaccionDAO;
+    private iInteraccionService interaccionService;
+    private frmVentanaPrincipal padre;
 
-    public pnlExplorar(List<Estudiante> estudiantes){
+    public pnlExplorar(frmVentanaPrincipal padre, List<Estudiante> estudiantes){
+        this.padre = padre;
+        Estudiante enSesion = padre.getEstudianteEnSesion();
         this.listaEstudiantes = estudiantes;
-        interaccionDAO = new InteraccionDAO();
+        try{
+            estudiantes.remove(enSesion);
+        }
+        catch(Exception e){
+            System.out.println("Ni yo se que paso, pero fue malo");
+        }
+        interaccionService = new InteraccionService();
 
         setLayout(new BorderLayout(10, 10));
         setBackground(new Color(245, 240, 255));
@@ -53,10 +64,12 @@ public class pnlExplorar extends JPanel {
 
         // Foto
         lblFoto = new JLabel();
+        lblFoto.setSize(100,100);
         lblFoto.setHorizontalAlignment(JLabel.CENTER);
         lblFoto.setBorder(BorderFactory.createEmptyBorder(10, 0, 20, 0));
         add(lblFoto, BorderLayout.NORTH);
-
+        
+        
         // Panel info
         JPanel panelInfo = new JPanel(new GridLayout(0, 1, 5, 5));
         panelInfo.setBackground(new Color(245, 240, 255));
@@ -121,6 +134,7 @@ public class pnlExplorar extends JPanel {
             lblDescripcion.setText("Descripcion: " + est.getDescripcion());
             
             ImageIcon fotoPerfil = null;
+            lblFoto.setText("Error al cargar la foto");
 
             //foto
         try{
@@ -132,12 +146,17 @@ public class pnlExplorar extends JPanel {
             ex.printStackTrace();
         }
         if(fotoPerfil == null){
-            lblFoto.setText("Error al cargar la foto de perfil");
         }else{
             lblFoto.setIcon(fotoPerfil);
         }
         } else {
-            JOptionPane.showMessageDialog(this, "No hay más perfiles");
+            lblFoto.setText("Error al cargar la foto de perfil");
+            lblNombre.setText("Nombre: -");
+            lblCarrera.setText("Carrera: -");
+            lblDescripcion.setText("Descripción: -");
+            btnLike.setEnabled(false);
+            btnDislike.setEnabled(false);
+            JOptionPane.showMessageDialog(this, "No hay otros perfiles");
         }
     }
 
@@ -160,7 +179,7 @@ public class pnlExplorar extends JPanel {
         nueva.setEstudianteOrigen(estInteractua);
         nueva.setTipoInteraccion(TipoInteraccion.LIKE);
         
-        interaccionDAO.agregar(nueva, JPAUtil.getEntityManager());
+        interaccionService.guardar(nueva);
     }
     
     private void mandarInteraccionDislike(int indice){
@@ -173,7 +192,7 @@ public class pnlExplorar extends JPanel {
         nueva.setEstudianteOrigen(estInteractua);
         nueva.setTipoInteraccion(TipoInteraccion.DISLIKE);
         
-        interaccionDAO.agregar(nueva, JPAUtil.getEntityManager());
+        interaccionService.guardar(nueva);
     }
     
     private void salir(){

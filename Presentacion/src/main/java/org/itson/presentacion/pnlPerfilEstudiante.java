@@ -311,6 +311,7 @@ public class pnlPerfilEstudiante extends javax.swing.JPanel {
         estudianteActualizado.setNombre(txtNombre.getText());
         estudianteActualizado.setCorreo(txtCorreo.getText());
         estudianteActualizado.setDescripcion(txtDescripcion.getText());
+        
         //Imagen a byte[]
         ImageIcon fotoPerfil = (ImageIcon) FotoDePerfil.getIcon();
         Image imagen = fotoPerfil.getImage();
@@ -327,6 +328,7 @@ public class pnlPerfilEstudiante extends javax.swing.JPanel {
         byte[] fotoEnBytes = baos.toByteArray();
         estudianteActualizado.setFoto(fotoEnBytes);
         estudianteService.actualizar(estudianteActualizado);
+        this.estudiante = estudianteActualizado;
         JOptionPane.showMessageDialog(this, "Perfil actualizado correctamente", "Datos actualizados", JOptionPane.INFORMATION_MESSAGE);
     }
     

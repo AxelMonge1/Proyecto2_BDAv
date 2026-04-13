@@ -27,6 +27,7 @@ public class frmCrearCuenta extends javax.swing.JFrame {
         elPanel.revalidate();
         elPanel.repaint();
         setTitle("Registro");
+        setLocationRelativeTo(null);
     }
 
     /**

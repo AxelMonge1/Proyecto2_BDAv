@@ -44,4 +44,6 @@ public class InteraccionDAO implements iInteraccionDAO {
         query.setMaxResults(100);
         return query.getResultList();
     }
+    
+    
 }

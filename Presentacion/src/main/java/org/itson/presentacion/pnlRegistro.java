@@ -153,12 +153,12 @@ public class pnlRegistro extends javax.swing.JPanel {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(labelPerfil)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 80, Short.MAX_VALUE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addComponent(jLabel1)
                                         .addGap(296, 296, 296))
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(btnFotoPerfil, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(72, 72, 72)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(btnSiguiente)
                                         .addGap(0, 0, Short.MAX_VALUE))))
                             .addGroup(layout.createSequentialGroup()
@@ -432,7 +432,7 @@ public class pnlRegistro extends javax.swing.JPanel {
     }//GEN-LAST:event_btnFotoPerfilActionPerformed
 
     private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
-        frmInicio padre = (frmInicio) SwingUtilities.getWindowAncestor(this);
+        frmCrearCuenta padre = (frmCrearCuenta) SwingUtilities.getWindowAncestor(this);
         padre.volverAInicioSesion();
     }//GEN-LAST:event_btnVolverActionPerformed
 
