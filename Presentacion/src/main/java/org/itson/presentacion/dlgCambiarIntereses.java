@@ -225,10 +225,14 @@ public class dlgCambiarIntereses extends javax.swing.JDialog {
         });
     }
     
-    public Set<Aficion> obtenerAficionesSeleccionadas(){
+    public Set<Aficion> obtenerAficionesSeleccionadas(boolean min){
         IAficionDAO aficionDAO = new AficionDAO();
-        int minimoH = 2;
-        int minimoI = 2;
+        int minimoH = 0;
+        int minimoI = 0;
+        if(min){
+            minimoH = 2;
+            minimoI = 2;
+        }
         List<String> aficionesH = new ArrayList<>();
         List<String> aficionesI = new ArrayList<>();
         Set<Aficion> aficionesSeleccionadas = new HashSet<>();

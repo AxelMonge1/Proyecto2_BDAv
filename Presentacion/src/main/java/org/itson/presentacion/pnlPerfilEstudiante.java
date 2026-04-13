@@ -332,7 +332,7 @@ public class pnlPerfilEstudiante extends javax.swing.JPanel {
         dlgCambiarIntereses dlg = new dlgCambiarIntereses(frame, true);
         dlg.setLocationRelativeTo(this);
         dlg.setVisible(true);
-        return dlg.obtenerAficionesSeleccionadas();
+        return dlg.obtenerAficionesSeleccionadas(true);
     }
     
     private String cambiarContrasena(){

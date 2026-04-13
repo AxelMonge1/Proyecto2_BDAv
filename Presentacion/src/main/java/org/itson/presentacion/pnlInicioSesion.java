@@ -5,12 +5,14 @@
 package org.itson.presentacion;
 
 import com.mycompany.negocios.EstudianteService;
+import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import models.Estudiante;
 import org.itson.persistencia.EstudianteDAO;
 import org.itson.persistencia.IEstudianteDAO;
 import org.itson.utilidades.JPAUtil;
+import org.itson.utilidades.RegexUtil;
 
 
 /**
@@ -18,7 +20,7 @@ import org.itson.utilidades.JPAUtil;
  * @author EdgarUris
  */
 public class pnlInicioSesion extends javax.swing.JPanel {
-
+    private RegexUtil regex;
     private IEstudianteDAO estDAO;
     private EstudianteService estService;
     
@@ -27,6 +29,7 @@ public class pnlInicioSesion extends javax.swing.JPanel {
      */
     public pnlInicioSesion() {
         initComponents();
+        this.regex = new RegexUtil();
         this.estDAO = new EstudianteDAO();
         this.estService = new EstudianteService();
     }
@@ -83,13 +86,14 @@ public class pnlInicioSesion extends javax.swing.JPanel {
                         .addGap(217, 217, 217)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(lblContra, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblUser, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lblNoCuenta, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(43, 43, 43)
-                                .addComponent(lblBienvenido))
                             .addComponent(txtCorreo)
-                            .addComponent(pswContra))
+                            .addComponent(pswContra)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(lblUser, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                    .addGap(43, 43, 43)
+                                    .addComponent(lblBienvenido))))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnVerPass))
                     .addGroup(layout.createSequentialGroup()
@@ -136,21 +140,23 @@ public class pnlInicioSesion extends javax.swing.JPanel {
         if(correo.trim().isEmpty() || contra.isEmpty()){
             JOptionPane.showMessageDialog(this, "Todos los campos son necesarios", "Campos faltantes", JOptionPane.ERROR_MESSAGE);
         }
-
-        Estudiante e = estDAO.buscarPorCorreo(correo, JPAUtil.getEntityManager());
-        
-        if(e == null){
-            JOptionPane.showMessageDialog(this, "No se encontró la cuenta con el correo proporcionado", 
-                    "Cuenta no encontrada", JOptionPane.ERROR_MESSAGE);
+        if(!regex.validaCorreoEstudiante(txtCorreo.getText().trim())){
+            JOptionPane.showMessageDialog(this, "Usa tu correo institucional (nombre.apellidoID@potros.itson.edu.mx)", "Correo erroneo", JOptionPane.ERROR_MESSAGE);
             return;
         }
+        List<Estudiante> ests = estDAO.buscarPorCorreo(correo, JPAUtil.getEntityManager());
+        if(ests.isEmpty()){
+            JOptionPane.showMessageDialog(this, "Este correo no esta registrado", "Correo no registrado", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        Estudiante e = ests.get(0);
         if(!e.getContrasena().equals(contra)){
             JOptionPane.showMessageDialog(this, "Contraseña incorrecta, intenta de nuevo", 
                     "Contraseña incorrecta", JOptionPane.INFORMATION_MESSAGE);
             return;
         }
         
-        frmPrincipal ventana = new frmPrincipal(e);
+        frmVentanaPrincipal ventana = new frmVentanaPrincipal(e);
         ventana.setVisible(true);
         frmInicio padre = (frmInicio) SwingUtilities.getWindowAncestor(this);
         padre.dispose();

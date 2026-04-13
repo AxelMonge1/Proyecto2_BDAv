@@ -42,6 +42,8 @@ public class Estudiante implements Serializable {
     
     private String contrasena;
     
+    private Integer semestre;
+    
     @Lob
     @Column(name = "foto_perfil", columnDefinition = "LONGBLOB")
     private byte[] foto;
@@ -65,7 +67,7 @@ public class Estudiante implements Serializable {
     public Estudiante() {
     }
 
-    public Estudiante(Long id, String nombre, String carrera, String descripcion, String correo, String contrasena, byte[] foto, Set<Aficion> aficiones) {
+    public Estudiante(Long id, String nombre, String carrera, String descripcion, String correo, String contrasena, byte[] foto, Set<Aficion> aficiones, Integer semestre) {
         this.id = id;
         this.nombre = nombre;
         this.carrera = carrera;
@@ -74,6 +76,11 @@ public class Estudiante implements Serializable {
         this.contrasena = contrasena;
         this.foto = foto;
         this.aficiones = aficiones;
+        this.semestre = semestre;
+    }
+
+    public void setSemestre(Integer semestre) {
+        this.semestre = semestre;
     }
 
     public void setFoto(byte[] foto) {
@@ -118,6 +125,10 @@ public class Estudiante implements Serializable {
 
     public void setMatchesRecibidos(Set<Match> matchesRecibidos) {
         this.matchesRecibidos = matchesRecibidos;
+    }
+
+    public Integer getSemestre() {
+        return semestre;
     }
 
     public byte[] getFoto() {

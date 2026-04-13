@@ -6,6 +6,7 @@ package com.mycompany.negocios;
 
 import jakarta.persistence.EntityManager;
 import java.util.List;
+import javax.swing.table.DefaultTableModel;
 import models.Estudiante;
 import org.itson.persistencia.EstudianteDAO;
 import org.itson.persistencia.IEstudianteDAO;
@@ -150,5 +151,30 @@ public class EstudianteService implements IEstudianteService{
         }finally{
             em.close();
         }
+    }
+    
+    public DefaultTableModel obtenerTablaEstudiantes() {
+        EntityManager em = JPAUtil.getEntityManager();
+        String[] columnas = {"NOMBRE", "CARRERA", "SEMESTRE"};
+        DefaultTableModel modelo = new DefaultTableModel(null, columnas);
+        List<Estudiante> lista = estudianteDAO.listar(em);
+        lista.forEach(e -> modelo.addRow(new Object[]{e.getNombre(), e.getCarrera(), e.getSemestre()}));
+        return modelo;
+    }
+    
+    public DefaultTableModel obtenerTablaEstudiantesPorFiltro(String filtro) {
+        EntityManager em = JPAUtil.getEntityManager();
+        String[] columnas = {"NOMBRE", "CARRERA", "SEMESTRE"};
+        DefaultTableModel modelo = new DefaultTableModel(null, columnas);
+        List<Estudiante> lista = estudianteDAO.buscarPorNombre(filtro, em);
+        lista.forEach(e -> modelo.addRow(new Object[]{e.getNombre(), e.getCarrera(), e.getSemestre()}));
+        return modelo;
+    }
+    
+    public DefaultTableModel obtenerTablaConLista(List<Estudiante> estudiantes){
+        String[] columnas = {"NOMBRE", "CARRERA", "SEMESTRE"};
+        DefaultTableModel modelo = new DefaultTableModel(null, columnas);
+        estudiantes.forEach(e -> modelo.addRow(new Object[]{e.getNombre(), e.getCarrera(), e.getSemestre()}));
+        return modelo;
     }
 }
