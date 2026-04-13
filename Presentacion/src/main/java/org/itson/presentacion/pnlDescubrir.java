@@ -12,7 +12,7 @@ import javax.swing.JButton;
 import javax.swing.JOptionPane;
 
 /**
- *
+ *@autor Jenifer Flores
  * @author EdgarUris
  */
 public class pnlDescubrir extends javax.swing.JPanel {
