@@ -13,6 +13,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -30,7 +31,7 @@ public class Aficion implements Serializable {
     private String nombre;
     
     @ManyToMany(mappedBy = "aficiones")
-    private Set<Estudiante> estudiantes;
+    private Set<Estudiante> estudiantes = new HashSet<>();
     
     @Enumerated(EnumType.STRING)
     @Column(name = "tipo_aficion")

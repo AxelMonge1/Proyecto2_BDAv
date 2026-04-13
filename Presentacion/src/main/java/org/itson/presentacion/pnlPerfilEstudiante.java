@@ -4,7 +4,24 @@
  */
 package org.itson.presentacion;
 
+import com.mycompany.negocios.EstudianteService;
 import com.mycompany.negocios.IEstudianteService;
+import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.util.Set;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPasswordField;
+import javax.swing.JToggleButton;
+import javax.swing.SwingUtilities;
+import models.Aficion;
 import models.Estudiante;
 
 /**
@@ -15,6 +32,7 @@ import models.Estudiante;
 public class pnlPerfilEstudiante extends javax.swing.JPanel {
     private Estudiante estudiante;
     private IEstudianteService estudianteService;
+    private Set<Aficion> aficiones;
 
     /**
      * Creates new form pnlPerfilEstudiante
@@ -22,6 +40,9 @@ public class pnlPerfilEstudiante extends javax.swing.JPanel {
     public pnlPerfilEstudiante(Estudiante e) {
         initComponents();
         this.estudiante = e;
+        this.aficiones = e.getAficiones();
+        this.estudianteService = new EstudianteService();
+        cargarDatos();
     }
 
     /**
@@ -36,8 +57,6 @@ public class pnlPerfilEstudiante extends javax.swing.JPanel {
         lblTitulo = new javax.swing.JLabel();
         lblNombre = new javax.swing.JLabel();
         txtNombre = new javax.swing.JTextField();
-        lblApellido = new javax.swing.JLabel();
-        txtApellido = new javax.swing.JTextField();
         lblCorreo = new javax.swing.JLabel();
         txtCorreo = new javax.swing.JTextField();
         lblFotoPerfil = new javax.swing.JLabel();
@@ -48,14 +67,19 @@ public class pnlPerfilEstudiante extends javax.swing.JPanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         txtDescripcion = new javax.swing.JTextArea();
         btnActualizar = new javax.swing.JButton();
+        btnCambiarCarrera = new javax.swing.JButton();
+        lblAficiones = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        txtAficiones = new javax.swing.JTextArea();
+        btnCambiarAficiones = new javax.swing.JButton();
+        btnEliminar = new javax.swing.JButton();
+        btnCambiarPsw = new javax.swing.JButton();
 
         lblTitulo.setText("Tu perfil");
 
-        lblNombre.setText("Nombre:");
+        lblNombre.setText("Nombre completo:");
 
         txtNombre.addActionListener(this::txtNombreActionPerformed);
-
-        lblApellido.setText("Apellido:");
 
         lblCorreo.setText("Correo:");
 
@@ -74,77 +98,125 @@ public class pnlPerfilEstudiante extends javax.swing.JPanel {
         jScrollPane1.setViewportView(txtDescripcion);
 
         btnActualizar.setText("Guardar cambios");
+        btnActualizar.addActionListener(this::btnActualizarActionPerformed);
+
+        btnCambiarCarrera.setText("Cambiar carrera");
+        btnCambiarCarrera.addActionListener(this::btnCambiarCarreraActionPerformed);
+
+        lblAficiones.setText("Intereses:");
+
+        txtAficiones.setEditable(false);
+        txtAficiones.setColumns(20);
+        txtAficiones.setRows(5);
+        jScrollPane2.setViewportView(txtAficiones);
+
+        btnCambiarAficiones.setText("Cambiar intereses");
+        btnCambiarAficiones.addActionListener(this::btnCambiarAficionesActionPerformed);
+
+        btnEliminar.setText("Eliminar la cuenta");
+        btnEliminar.addActionListener(this::btnEliminarActionPerformed);
+
+        btnCambiarPsw.setText("Cambiar contraseña");
+        btnCambiarPsw.addActionListener(this::btnCambiarPswActionPerformed);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(lblNombre)
-                        .addGap(163, 163, 163)
-                        .addComponent(lblApellido))
-                    .addComponent(lblCarrera)
-                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(txtCarrera, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 190, Short.MAX_VALUE)
-                            .addComponent(txtNombre, javax.swing.GroupLayout.Alignment.LEADING))
-                        .addGap(18, 18, 18)
-                        .addComponent(txtApellido, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(lblDescripcion)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 269, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addComponent(txtCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(6, 6, 6))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(lblCorreo)
+                                        .addGap(223, 223, 223)))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lblDescripcion)
+                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 269, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(255, 255, 255))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(lblNombre)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(txtCarrera, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(btnCambiarCarrera))
+                                    .addComponent(lblCarrera)
+                                    .addComponent(lblAficiones))
+                                .addGap(186, 186, 186)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(FotoDePerfil, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addComponent(lblFotoPerfil)
+                                        .addGap(82, 82, 82))))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(12, 12, 12)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(btnActualizar)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(btnCambiarPsw)
+                                        .addGap(53, 53, 53)
+                                        .addComponent(btnEliminar)
+                                        .addGap(27, 27, 27))
+                                    .addComponent(btnCambiarAficiones)))))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(37, 37, 37)
-                        .addComponent(btnActualizar)))
-                .addGap(27, 27, 27)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(txtCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(FotoDePerfil, javax.swing.GroupLayout.DEFAULT_SIZE, 256, Short.MAX_VALUE)
-                        .addContainerGap())
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(lblTitulo)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(lblCorreo)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(lblFotoPerfil)
-                        .addGap(95, 95, 95))))
+                        .addGap(373, 373, 373)
+                        .addComponent(lblTitulo)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(lblTitulo)
-                .addGap(24, 24, 24)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblNombre)
-                    .addComponent(lblApellido)
-                    .addComponent(lblCorreo)
-                    .addComponent(lblFotoPerfil))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblFotoPerfil, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(lblNombre))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(3, 3, 3)
-                        .addComponent(FotoDePerfil, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addContainerGap())
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtApellido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(30, 30, 30)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblDescripcion)
+                            .addComponent(lblCorreo))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addComponent(txtCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(28, 28, 28)))
+                        .addGap(7, 7, 7)
                         .addComponent(lblCarrera)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtCarrera, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(90, 90, 90)
-                        .addComponent(lblDescripcion)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 69, Short.MAX_VALUE)
-                        .addComponent(btnActualizar)
-                        .addGap(32, 32, 32))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtCarrera, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnCambiarCarrera))
+                        .addGap(18, 18, 18)
+                        .addComponent(lblAficiones)
+                        .addGap(7, 7, 7)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnCambiarAficiones)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addComponent(FotoDePerfil, javax.swing.GroupLayout.PREFERRED_SIZE, 347, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnActualizar)
+                            .addComponent(btnEliminar)
+                            .addComponent(btnCambiarPsw))
+                        .addGap(18, 18, 18))))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -152,19 +224,181 @@ public class pnlPerfilEstudiante extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtNombreActionPerformed
 
+    private void btnCambiarCarreraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCambiarCarreraActionPerformed
+        txtCarrera.setText(cambiarCarrera());
+    }//GEN-LAST:event_btnCambiarCarreraActionPerformed
+
+    private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
+        actualizar();
+    }//GEN-LAST:event_btnActualizarActionPerformed
+
+    private void btnCambiarAficionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCambiarAficionesActionPerformed
+        Set<Aficion> aficionesActualizadas = actualizarAficiones();
+        if(aficionesActualizadas.isEmpty()){
+            return;
+        }
+        StringBuilder sb = new StringBuilder();
+        aficionesActualizadas.forEach(a -> {
+            sb.append(a.getNombre());
+            sb.append(", ");
+        });
+        aficiones = aficionesActualizadas;
+        txtCarrera.setText(sb.toString());
+    }//GEN-LAST:event_btnCambiarAficionesActionPerformed
+
+    private void btnCambiarPswActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCambiarPswActionPerformed
+        String psw = cambiarContrasena();
+        estudiante.setContrasena(psw);
+    }//GEN-LAST:event_btnCambiarPswActionPerformed
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        if(eliminar()){
+            estudianteService.eliminar(estudiante.getId());
+        }
+    }//GEN-LAST:event_btnEliminarActionPerformed
+
+    private void cargarDatos(){
+        txtNombre.setText(estudiante.getNombre());
+        txtCorreo.setText(estudiante.getCorreo());
+        txtCarrera.setText(estudiante.getCarrera());
+        txtDescripcion.setText(estudiante.getDescripcion());
+        ImageIcon fotoPerfil = null;
+        try{
+            ByteArrayInputStream bais = new ByteArrayInputStream(estudiante.getFoto());
+            BufferedImage bi = ImageIO.read(bais);
+            Image imagenEscalada = bi.getScaledInstance(FotoDePerfil.getWidth(), FotoDePerfil.getHeight(), Image.SCALE_SMOOTH);
+            fotoPerfil = new ImageIcon(imagenEscalada);
+        }catch(IOException ex){
+            ex.printStackTrace();
+        }
+        if(fotoPerfil == null){
+            FotoDePerfil.setText("Error al cargar la foto de perfil");
+        }else{
+            FotoDePerfil.setIcon(fotoPerfil);
+        }
+        StringBuilder sb = new StringBuilder();
+        aficiones.forEach(a -> {
+            sb.append(a.getNombre());
+            sb.append(", ");
+        });
+        txtAficiones.setText(sb.toString());
+    }
+    
+    private String cambiarCarrera(){
+        JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this);
+        dlgCambiarCarrera dlg = new dlgCambiarCarrera(frame, true);
+        dlg.setLocationRelativeTo(this);
+        dlg.setVisible(true);
+        String carrera = dlg.getCarreraSeleccionada();
+        if(carrera.equals("Elige")){
+            return txtCarrera.getText();
+        }
+        return carrera;
+    }
+    
+    private void actualizar(){
+        Estudiante estudianteActualizado = new Estudiante();
+        estudianteActualizado.setId(estudiante.getId());
+        estudianteActualizado.setAficiones(aficiones);
+        estudianteActualizado.setMatchesIniciados(estudiante.getMatchesIniciados());
+        estudianteActualizado.setMatchesRecibidos(estudiante.getMatchesRecibidos());
+        estudianteActualizado.setContrasena(estudiante.getContrasena());
+        estudianteActualizado.setInteraccionesHechas(estudiante.getInteraccionesHechas());
+        estudianteActualizado.setInteraccionesRecibidas(estudiante.getInteraccionesRecibidas());
+        estudianteActualizado.setCarrera(txtCarrera.getText());
+        estudianteActualizado.setNombre(txtNombre.getText());
+        estudianteActualizado.setCorreo(txtCorreo.getText());
+        estudianteActualizado.setDescripcion(txtDescripcion.getText());
+        //Imagen a byte[]
+        ImageIcon fotoPerfil = (ImageIcon) FotoDePerfil.getIcon();
+        Image imagen = fotoPerfil.getImage();
+        BufferedImage bi = new BufferedImage(imagen.getWidth(null), imagen.getHeight(null), BufferedImage.TYPE_INT_RGB);
+        Graphics2D g2 = bi.createGraphics();
+        g2.drawImage(imagen, 0, 0, null);
+        g2.dispose();
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        try{
+            ImageIO.write(bi, "jpg", baos);
+        }catch(IOException ex){
+            ex.printStackTrace();
+        }
+        byte[] fotoEnBytes = baos.toByteArray();
+        estudianteActualizado.setFoto(fotoEnBytes);
+        estudianteService.actualizar(estudianteActualizado);
+    }
+    
+    private Set<Aficion> actualizarAficiones(){
+        JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this);
+        dlgCambiarIntereses dlg = new dlgCambiarIntereses(frame, true);
+        dlg.setLocationRelativeTo(this);
+        dlg.setVisible(true);
+        return dlg.obtenerAficionesSeleccionadas(true);
+    }
+    
+    private String cambiarContrasena(){
+        JLabel lblPswAntigua = new JLabel("Contraseña actual:");
+        JPasswordField txtPswAntigua = new JPasswordField();
+        JLabel lblPswNueva = new JLabel("Nueva contraseña:");
+        JPasswordField txtPswNueva = new JPasswordField();
+        JLabel lblPswConfirm = new JLabel("Confirme la nueva contraseña:");
+        JPasswordField txtPswConfirm = new JPasswordField();
+        JToggleButton btnVerPsw = new JToggleButton("o_o");
+        btnVerPsw.addActionListener(e -> {
+            if(btnVerPsw.isSelected()){
+                txtPswAntigua.setEchoChar((char)0);
+                txtPswNueva.setEchoChar((char)0);
+                txtPswConfirm.setEchoChar((char)0);
+                btnVerPsw.setText("-_-");
+            }
+            else{
+                txtPswAntigua.setEchoChar('*');
+                txtPswNueva.setEchoChar('*');
+                txtPswConfirm.setEchoChar('*');
+                btnVerPsw.setText("o_o");
+            }
+        });
+        Object[] mensaje = {lblPswAntigua, txtPswAntigua, lblPswNueva, txtPswNueva, lblPswConfirm, txtPswConfirm};
+        int opcion = JOptionPane.showConfirmDialog(this, mensaje, "Cambiar contraseña", JOptionPane.OK_CANCEL_OPTION);
+        if(opcion == JOptionPane.OK_OPTION){
+            String pswAntigua = String.valueOf(txtPswAntigua.getPassword());
+            if(!pswAntigua.equals(estudiante.getContrasena())){
+                JOptionPane.showMessageDialog(this, "La contraseña actual no coincide con la guardada en el sistema", "Contraseña incorrecta", JOptionPane.ERROR_MESSAGE);
+                return estudiante.getContrasena();
+            }
+            String pswNueva = String.valueOf(txtPswNueva.getPassword());
+            String pswConfitm = String.valueOf(txtPswConfirm.getPassword());
+            if(!pswNueva.equals(pswConfitm)){
+                JOptionPane.showMessageDialog(this, "Las nuevas contraseñas no coinciden, asegurese que la contraseña nueva sea exactamente igual a la contraseña de la confirmacion", "Contraseña incorrecta", JOptionPane.ERROR_MESSAGE);
+                return estudiante.getContrasena();
+            }
+            return pswNueva;
+        }
+        return estudiante.getContrasena();
+    }
+    
+    private boolean eliminar(){
+        Object[] mensaje = {"¿Desea eliminar su cuenra?"};
+        int opcion = JOptionPane.showConfirmDialog(this, mensaje, "Eliminar la cuenta", JOptionPane.OK_CANCEL_OPTION);
+        return opcion == JOptionPane.OK_OPTION;
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel FotoDePerfil;
     private javax.swing.JButton btnActualizar;
+    private javax.swing.JButton btnCambiarAficiones;
+    private javax.swing.JButton btnCambiarCarrera;
+    private javax.swing.JButton btnCambiarPsw;
+    private javax.swing.JButton btnEliminar;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JLabel lblApellido;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JLabel lblAficiones;
     private javax.swing.JLabel lblCarrera;
     private javax.swing.JLabel lblCorreo;
     private javax.swing.JLabel lblDescripcion;
     private javax.swing.JLabel lblFotoPerfil;
     private javax.swing.JLabel lblNombre;
     private javax.swing.JLabel lblTitulo;
-    private javax.swing.JTextField txtApellido;
+    private javax.swing.JTextArea txtAficiones;
     private javax.swing.JTextField txtCarrera;
     private javax.swing.JTextField txtCorreo;
     private javax.swing.JTextArea txtDescripcion;

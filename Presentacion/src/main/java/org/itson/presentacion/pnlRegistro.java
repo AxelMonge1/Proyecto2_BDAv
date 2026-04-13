@@ -4,14 +4,13 @@
  */
 package org.itson.presentacion;
 
-import com.mycompany.negocios.EstudianteService;
-import com.mycompany.negocios.IEstudianteService;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
@@ -19,6 +18,8 @@ import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import models.Estudiante;
+import org.itson.persistencia.EstudianteDAO;
+import org.itson.utilidades.JPAUtil;
 import org.itson.utilidades.RegexUtil;
 
 /**
@@ -27,15 +28,14 @@ import org.itson.utilidades.RegexUtil;
  * @author axelm
  */
 public class pnlRegistro extends javax.swing.JPanel {
-
-    private IEstudianteService estudianteService;
     private RegexUtil regex;
+    private EstudianteDAO estudianteDAO;
     /**
      * Creates new form pnlRegistro
      */
     public pnlRegistro() {
-        this.estudianteService = new EstudianteService();
         this.regex = new RegexUtil();
+        this.estudianteDAO = new EstudianteDAO();
         initComponents();
     }
 
@@ -276,9 +276,7 @@ public class pnlRegistro extends javax.swing.JPanel {
 
     private void btnSiguienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSiguienteActionPerformed
         boolean pasar = validarDatos();
-        if(pasar){
-            System.out.println("ASDAF");
-            
+        if(pasar){            
             String nombre = txtNombre.getText().trim();
             String apellido = txtApellido.getText().trim();
             String correo = txtCorreo.getText();
@@ -334,11 +332,20 @@ public class pnlRegistro extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "Usa tu correo institucional (nombre.apellidoID@potros.itson.edu.mx)", "Correo erroneo", JOptionPane.ERROR_MESSAGE);
             return false;
         }
+        List<Estudiante> ests = estudianteDAO.buscarPorCorreo(txtCorreo.getText().trim(), JPAUtil.getEntityManager());
+        if(!ests.isEmpty()){
+            JOptionPane.showMessageDialog(this, "Este correo ya esta registrado", "Correo ya registrado", JOptionPane.ERROR_MESSAGE);
+            return false; 
+        }
         
         char[] contraChar = pswContra.getPassword();
         String contra = "";        
         for (char c : contraChar) {
             contra += c;
+        }
+        if(!regex.validaContrasena(contra.trim())){
+            JOptionPane.showMessageDialog(this, "La contraseña debe ser de entre 8 a 15 caracteres, solo letras (mayusculas y/o minusculas) y/o alguno de estos signos: _$", "Correo erroneo", JOptionPane.ERROR_MESSAGE);
+            return false;
         }
         char[] contraConfChar = pswContraConf.getPassword();
         String contraConf = "";        
@@ -412,6 +419,7 @@ public class pnlRegistro extends javax.swing.JPanel {
             Image imagenOriginal = imagen.getImage();
             Image imagenRedimensionada = imagenOriginal.getScaledInstance(FotoDePerfil.getWidth(), FotoDePerfil.getHeight(), Image.SCALE_SMOOTH);
             FotoDePerfil.setIcon(new ImageIcon(imagenRedimensionada));
+            FotoDePerfil.setText("");
         }
     }//GEN-LAST:event_btnFotoPerfilActionPerformed
 

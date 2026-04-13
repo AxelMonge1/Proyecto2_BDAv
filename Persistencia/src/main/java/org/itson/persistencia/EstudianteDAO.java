@@ -27,11 +27,12 @@ public class EstudianteDAO implements IEstudianteDAO {
     }
     
     @Override
-    public Estudiante buscarPorCorreo(String correo, EntityManager em){
-        TypedQuery<Estudiante> query = em.createQuery("SELECT e FROM Estudiante e WHERE correo LIKE :correo", Estudiante.class);
+    public List<Estudiante> buscarPorCorreo(String correo, EntityManager em){
+        TypedQuery<Estudiante> query = em.createQuery("SELECT e FROM Estudiante e WHERE e.correo LIKE :correo", Estudiante.class);
         query.setParameter("correo", "%" + correo + "%");
-        query.setFirstResult(1);
-        return query.getSingleResult();
+        query.setFirstResult(0);
+        query.setMaxResults(100);
+        return query.getResultList();
     }
 
     @Override

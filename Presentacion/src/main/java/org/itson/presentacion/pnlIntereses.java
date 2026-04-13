@@ -4,7 +4,8 @@
  */
 package org.itson.presentacion;
 
-import java.sql.SQLException;
+import com.mycompany.negocios.EstudianteService;
+import com.mycompany.negocios.IEstudianteService;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -20,7 +21,7 @@ import org.itson.utilidades.JPAUtil;
  * @author HP
  */
 public class pnlIntereses extends javax.swing.JPanel {
-    
+    private IEstudianteService estudianteService;
     Estudiante est;
     /**
      * Creates new form pnlIntereses
@@ -28,6 +29,7 @@ public class pnlIntereses extends javax.swing.JPanel {
     public pnlIntereses(Estudiante est) {
         initComponents();
         this.est = est;
+        this.estudianteService = new EstudianteService();
     }
 
     /**
@@ -279,7 +281,7 @@ public class pnlIntereses extends javax.swing.JPanel {
         }
         if(IntCine.isSelected()){
             minimoI--;
-            aficionesI.add("Cine");
+            aficionesI.add("Cine y series");
         }
         if(IntModa.isSelected()){
             minimoI--;
@@ -314,6 +316,7 @@ public class pnlIntereses extends javax.swing.JPanel {
             est.getAficiones().add(hob);
         }
         JOptionPane.showConfirmDialog(this, "Cuenta creada con exito","Cuenta creada",JOptionPane.INFORMATION_MESSAGE);
+        estudianteService.guardar(est);
         
         frmCrearCuenta padre = (frmCrearCuenta) SwingUtilities.getWindowAncestor(this);
         padre.volverAInicioSesion();
