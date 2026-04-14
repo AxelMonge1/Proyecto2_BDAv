@@ -99,10 +99,8 @@ public class pnlMatches extends JPanel {
     }
     
     private void cargarMatches(){
-        List<Match> matches = matchService.listarMatchesPorEstudiante(Long.valueOf(padre.getEstudianteEnSesion().getId()));
+        List<Match> matches = matchService.listarMatchesPorEstudiante(padre.getEstudianteEnSesion().getId());
         DefaultTableModel modelo = matchService.obtenerTablaConLista(matches, padre.getEstudianteEnSesion().getId());
         tablaResultados.setModel(modelo);
-    }
-    
-    
+    }   
 }

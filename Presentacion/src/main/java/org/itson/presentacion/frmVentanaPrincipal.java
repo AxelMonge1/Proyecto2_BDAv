@@ -106,14 +106,6 @@ public class frmVentanaPrincipal extends JFrame {
         panelBotones.repaint();
     }
 
-    private void salirDelSistema() {
-        int confir = JOptionPane.showConfirmDialog(this, "¿Está seguro de que desea salir? Su sesión se cerrará", "Confirmar salida",
-                JOptionPane.YES_OPTION);
-        if (confir == JOptionPane.YES_OPTION) {
-            System.exit(0);
-        }
-    }
-
     private JButton crearBoton(String texto, Font fuente) {
         JButton boton = new JButton(texto);
         boton.setFont(fuente);
